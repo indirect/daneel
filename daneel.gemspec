@@ -14,4 +14,7 @@ Gem::Specification.new do |gem|
   gem.name          = "daneel"
   gem.require_paths = ["lib"]
   gem.version       = Daneel::VERSION
+
+  gem.add_dependency "firering", "~> 1.2.0"
+  gem.add_dependency "activerecord", "~> 3.1.0"
 end
