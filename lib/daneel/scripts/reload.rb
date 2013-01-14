@@ -9,7 +9,7 @@ class ReloadScript < Daneel::Script
       system("cd #{root} && git pull origin master && bundle install")
       restart
     when /^reload$/
-      say "k, brb"
+      say "Indeed. Reloading now."
       restart
     end
   end

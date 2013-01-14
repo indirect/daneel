@@ -7,7 +7,7 @@ require 'daneel/version'
 
 module Daneel
   class Bot
-    attr_reader :adapter, :logger, :name, :scripts
+    attr_reader :adapter, :full_name, :logger, :name, :scripts
     attr_accessor :debug_mode
 
     def initialize(options = Options.parse(ARGV))
@@ -15,7 +15,8 @@ module Daneel
       @logger.level = Logger::INFO unless options[:verbose]
       @logger.debug "Created with options #{options.inspect}"
 
-      @name   = options[:name] || "daneel"
+      @name = options[:name] || "daneel"
+      @full_name = options[:full_name] || options[:name] || "R. Daneel Olivaw"
       @server = Server.new(options[:server]) if options[:server]
       @debug_mode = true # who are we kidding
 
@@ -47,7 +48,7 @@ module Daneel
 
     def run
       @server.run if @server
-      @adapter.say "hey guys"
+      adapter.say "Greetings. #{full_name}, ready to assist."
       adapter.run
     rescue Interrupt
       adapter.leave
