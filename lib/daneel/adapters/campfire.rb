@@ -19,7 +19,7 @@ module Daneel
 
       def run
         @room.watch do |data|
-          next if data["type"] == "timestamp"
+          next if data["type"] == "TimestampMessage"
 
           # TODO pass through self-messages, once they are filtered by
           # the accept? method on scripts
