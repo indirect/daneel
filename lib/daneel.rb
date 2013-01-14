@@ -32,7 +32,7 @@ module Daneel
     def receive(message)
       logger.debug "Got message: #{message}"
       scripts.each do |script|
-        script.receive message if script.accept?(message)
+        script.receive message
       end
     end
 

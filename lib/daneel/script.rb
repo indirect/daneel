@@ -12,6 +12,9 @@ module Daneel
       def inherited(subclass)
         list << subclass
       end
+
+      # TODO accept method for script classes
+      # should handle options like :text, :enter, :leave, :topic, :all
     end
 
     def accept?(message)
