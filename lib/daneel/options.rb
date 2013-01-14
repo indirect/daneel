@@ -4,10 +4,7 @@ module Daneel
   module Options
 
     def self.parse(args)
-      options = {
-        :verbose => false,
-        :adapter => "shell"
-      }
+      options = {}
 
       OptionParser.new do |opts|
         opts.banner = "Usage: daneel [options]"

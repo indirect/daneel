@@ -1,9 +1,9 @@
-require 'daneel/version'
 require 'logger'
-require 'daneel/script'
 require 'daneel/adapter'
 require 'daneel/options'
+require 'daneel/script'
 require 'daneel/server'
+require 'daneel/version'
 
 module Daneel
   class Bot
@@ -25,8 +25,8 @@ module Daneel
       logger.debug "Booted with scripts: #{@scripts.map(&:class).inspect}"
 
       # Load the adapter
-      @adapter = Adapter.named(options[:adapter]).new(self)
-      logger.debug "Using the #{@adapter.class} adapter"
+      @adapter = Adapter.named(options[:adapter] || "shell").new(self)
+      logger.debug "Using the #{adapter.class} adapter"
     end
 
     def receive(message)
