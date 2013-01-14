@@ -1,6 +1,4 @@
-require 'ostruct'
-
 module Daneel
-  class User < OpenStruct
+  class User
   end
 end
