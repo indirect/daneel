@@ -3,7 +3,7 @@ require 'pathname'
 
 class ReloadScript < Daneel::Script
   def receive(message)
-    case message
+    case message.command
     when /^update$/
       return unless in_git?
       system("cd #{root} && git pull origin master && bundle install")

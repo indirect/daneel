@@ -31,8 +31,11 @@ module Daneel
 
     def receive(message)
       logger.debug "Got message: #{message}"
+      message.command = command_from(message.text)
+
       scripts.each do |script|
         script.receive message
+        break if message.finished
       end
     end
 
@@ -47,6 +50,16 @@ module Daneel
 
     def inspect
       %|#<#{self.class}:#{object_id} @name="#{name}" @adapter=#{adapter.class}>|
+    end
+
+  private
+
+    def command_from(text)
+      return if text.nil? || text.empty?
+      m = text.match(/^@#{name}\s+(.*)/i)
+      m ||= text.match(/^#{name}(?:[,:]\s*|\s+)(.*)/i)
+      m ||= text.match(/^\s*(.*?)(?:,\s*)?\b#{name}[.!?\s]*$/i)
+      m && m[1]
     end
 
   end

@@ -1,5 +1,6 @@
-require 'daneel/adapter'
 require 'sparks'
+require 'daneel/adapter'
+require 'daneel/message'
 
 module Daneel
   class Adapters
@@ -17,20 +18,20 @@ module Daneel
       end
 
       def run
-        @room.watch do |message|
-          receive message
+        @room.watch do |data|
+          next if data["type"] == "timestamp"
+
+          # TODO pass through self-messages, once they are filtered by
+          # the accept? method on scripts
+          next if data["user_id"] == me["id"]
+
+          type = data["type"].gsub(/Message$/, '').downcase
+          message = Message.new(data["body"], data["created_at"], type)
+          robot.receive message
         end
       rescue Exception => e
         @room.leave
         raise e
-      end
-
-      def receive(message)
-        # TODO pass through self-messages, once they are filtered by
-        # the accept? method on scripts
-        return if message["user_id"] == me["id"]
-        return if message["type"] == "TimestampMessage"
-        robot.receive message["body"]
       end
 
       def say(message)
