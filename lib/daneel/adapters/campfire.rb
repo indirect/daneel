@@ -34,8 +34,10 @@ module Daneel
         raise e
       end
 
-      def say(message)
-        @room.speak(message)
+      def say(*texts)
+        texts.each do |text|
+          text =~ /\n/ ? @room.paste(text) : @room.speak(text)
+        end
       end
 
       def me
