@@ -1,0 +1,1 @@
+web: ruby -Ilib -S ./bin/daneel -v -a campfire

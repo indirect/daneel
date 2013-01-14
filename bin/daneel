@@ -1,0 +1,7 @@
+require 'daneel'
+
+begin
+  Daneel::Bot.new.run
+rescue Interrupt
+  puts "Quitting...\n"
+end
