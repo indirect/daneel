@@ -29,15 +29,16 @@ module Daneel
           message = Message.new(data["body"], data["created_at"], type)
           robot.receive message
         end
-      rescue Exception => e
-        @room.leave
-        raise e
       end
 
       def say(*texts)
         texts.each do |text|
           text =~ /\n/ ? @room.paste(text) : @room.speak(text)
         end
+      end
+
+      def leave
+        @room.leave
       end
 
       def me

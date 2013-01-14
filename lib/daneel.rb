@@ -8,6 +8,7 @@ require 'daneel/version'
 module Daneel
   class Bot
     attr_reader :adapter, :logger, :name, :scripts
+    attr_accessor :debug_mode
 
     def initialize(options = Options.parse(ARGV))
       @logger = Logger.new(STDOUT)
@@ -16,6 +17,7 @@ module Daneel
 
       @name   = options[:name] || "daneel"
       @server = Server.new(options[:server]) if options[:server]
+      @debug_mode = true # who are we kidding
 
       # Load the echo script as a fallback
       require 'daneel/scripts/echo' if Script.list.empty?
@@ -37,15 +39,18 @@ module Daneel
         script.receive message
         break if message.finished
       end
+    rescue => e
+      msg = "#{e.class}: #{e.message}\n  #{e.backtrace.join('  \n')}"
+      logger.error msg
+      adapter.say "crap, something went wrong. :(", msg if @debug_mode
     end
 
     def run
-      # break off a thread to run the web server
       @server.run if @server
-      # announce bootup
       @adapter.say "hey guys"
-      # start the main event loop
-      @adapter.run
+      adapter.run
+    rescue Interrupt
+      adapter.leave
     end
 
     def inspect
