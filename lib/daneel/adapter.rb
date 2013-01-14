@@ -9,12 +9,6 @@ module Daneel
         adapter = Daneel::Adapters.const_get(name.capitalize)
         adapter || raise("Couldn't find Daneel::Adapters::#{a.capitalize}")
       end
-
-      def required_env(keys)
-        keys.each do |key|
-          raise "#{key} is required!" unless ENV[key]
-        end
-      end
     end
 
     def run
