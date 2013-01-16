@@ -21,7 +21,7 @@ module Daneel
     end
 
     def to_s
-      text
+      text || inspect
     end
 
   end
