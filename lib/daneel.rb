@@ -40,6 +40,8 @@ module Daneel
         script.receive message
         break if message.finished
       end
+
+      return message
     rescue => e
       msg = "#{e.class}: #{e.message}\n  #{e.backtrace.join('  \n')}"
       logger.error msg
