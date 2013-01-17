@@ -4,9 +4,9 @@ class HelpScript < Daneel::Script
   def receive(message)
     case message.command
     when /help$/
-      say helps.map{|s| s.map{|h| h.join(" - ") }.join("\n") }
+      say helps.map{|s| s.join(" - ") }.join("\n")
     when /help (.+)/
-      say helps.to_a.find{|h| h[$1] }[$1]
+      say helps[$1]
     end
   end
 
@@ -17,9 +17,14 @@ class HelpScript < Daneel::Script
 private
 
   def helps
-    @helps ||= robot.scripts.map(&:help).compact
-    logger.debug "Found helps: #{@helps.inspect}"
-    @helps
+    @helps ||= begin
+      helps = {}
+      robot.scripts.each do |script|
+        helps.merge!(script.help) if script.help
+      end
+      logger.debug "Found helps: #{helps.inspect}"
+      helps
+    end
   end
 
 end
