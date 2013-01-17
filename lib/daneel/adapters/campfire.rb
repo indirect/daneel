@@ -33,7 +33,7 @@ module Daneel
 
       def say(*texts)
         texts.each do |text|
-          text =~ /\n/ ? @room.paste(text) : @room.speak(text)
+          text =~ /\n/ ? @room.paste(text.to_s) : @room.speak(text.to_s)
         end
       end
 
