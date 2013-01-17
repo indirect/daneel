@@ -13,6 +13,9 @@ module Daneel
     def initialize(options = Options.parse(ARGV))
       @logger = Logger.new(STDOUT)
       @logger.level = Logger::INFO unless options[:verbose]
+      @logger.formatter = proc do |severity, datetime, progname, msg|
+        "#{severity} [#{Process.pid}] #{msg}\n"
+      end
       @logger.debug "Created with options #{options.inspect}"
 
       @name = options[:name] || "daneel"
