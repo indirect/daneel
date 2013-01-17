@@ -1,4 +1,5 @@
 require 'daneel/adapter'
+require 'daneel/message'
 require 'readline'
 
 module Daneel
@@ -9,8 +10,10 @@ module Daneel
         # End the line we were on when we exit
         trap(:EXIT){ print "\n" }
 
-        while message = Readline.readline("#{@robot.name}> ", true)
-          robot.receive message unless message.empty?
+        while text = Readline.readline("#{@robot.name}> ", true)
+          next if text.empty?
+          message = Message.new(text, Time.now, "text")
+          robot.receive message
         end
       end
 
