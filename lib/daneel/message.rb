@@ -21,7 +21,7 @@ module Daneel
     end
 
     def to_s
-      text || inspect
+      text || "#<#{self.class} #{type.inspect} #{time.inspect}>"
     end
 
   end
