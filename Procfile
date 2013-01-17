@@ -1,1 +1,1 @@
-web: ruby -Ilib -S ./bin/daneel -v -a campfire
+web: ruby -rbundler/setup -Ilib -S ./bin/daneel -v -a campfire
