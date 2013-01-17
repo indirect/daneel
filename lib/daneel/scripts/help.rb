@@ -2,7 +2,7 @@ require 'daneel/script'
 
 class HelpScript < Daneel::Script
   def receive(message)
-    case message
+    case message.command
     when /help$/
       say helps.map{|s| s.map{|h| h.join(" - ") }.join("\n") }
     when /help (.+)/
