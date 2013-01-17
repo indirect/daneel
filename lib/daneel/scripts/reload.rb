@@ -31,13 +31,14 @@ private
   end
 
   def root
-    @root ||= Pathname.new(__FILE__).join("../../../..").expand_path
-    logger.debug "root directory #{@root}"
-    @root
+    @root ||= begin
+      root = Pathname.new(__FILE__).join("../../../..").expand_path
+      logger.debug "Found root directory #{root}"
+      root
+    end
   end
 
   def in_git?
-    logger.debug root.join(".git").directory?
     @in_git ||= root.join(".git").directory?
   end
 
