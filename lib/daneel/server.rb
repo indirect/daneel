@@ -15,8 +15,8 @@ module Daneel
 
     def run
       Thread.new { run_server }
-      Thread.new { run_self_ping }
       sleep 0.1 # boot server before allowing possible interaction
+      Thread.new { run_self_ping }
     end
 
     def run_server
