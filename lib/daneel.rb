@@ -23,11 +23,7 @@ module Daneel
       @server = Server.new(options[:server]) if options[:server]
       @debug_mode = true # who are we kidding
 
-      # Load the echo script as a fallback
-      require 'daneel/scripts/echo' if Script.list.empty?
-      require 'daneel/scripts/reload'
-      require 'daneel/scripts/help'
-      @scripts = Script.list.map{|k| k.new(self) }
+      @scripts = Script.require_all.map{|k| k.new(self) }
       logger.debug "Booted with scripts: #{@scripts.map(&:class).inspect}"
 
       # Load the adapter
