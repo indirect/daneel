@@ -15,6 +15,7 @@ module Daneel
 
     def help
       # return a hash of commands and descriptions for help listings
+      {}
     end
 
     # Provide say as a convenience for other scripts

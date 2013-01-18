@@ -20,7 +20,7 @@ private
     @helps ||= begin
       helps = {}
       robot.scripts.each do |script|
-        helps.merge!(script.help) if script.help
+        helps.merge!(script.help)
       end
       logger.debug "Found helps: #{helps.inspect}"
       helps
