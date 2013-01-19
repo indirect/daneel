@@ -33,7 +33,7 @@ module Daneel
 
       scripts.each do |script|
         script.receive room, message
-        break if message.finished
+        break if message.done
       end
 
       return message

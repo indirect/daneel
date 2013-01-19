@@ -14,8 +14,8 @@ module Daneel
       @args = text ? Shellwords.split(text) : nil
     end
 
-    def finish!
-      @finished = true
+    def done!
+      @done = true
     end
 
     def inspect
