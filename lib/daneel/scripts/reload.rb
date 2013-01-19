@@ -10,9 +10,10 @@ module Daneel
         when /^update$/
           return unless in_git?
           system("cd #{root} && git pull origin master && bundle install")
+          room.say "updated, brb"
           restart
         when /^reload$/
-          say "Indeed. Reloading now."
+          room.say "k, brb"
           restart
         end
       end
