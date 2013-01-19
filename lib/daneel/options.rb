@@ -13,8 +13,8 @@ module Daneel
           options[:verbose] = v
         end
 
-          options[:server] = {:port => port}
         opts.on("-s", "--server", "[PORT]", "Run the HTTP server on PORT (default 3333)") do |port|
+          options[:server] = {:port => port}
         end
 
         opts.on("-a", "--adapter ADAPTER", "Which interaction adapter to use") do |name|
