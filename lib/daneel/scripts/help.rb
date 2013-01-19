@@ -4,7 +4,7 @@ class HelpScript < Daneel::Script
   def receive(message)
     case message.command
     when /help$/
-      say helps.map{|s| s.join(" - ") }.join("\n")
+      say helps.map{|s| s.join(" - ") }.sort.join("\n")
     when /help (.+)/
       say helps[$1]
     end
