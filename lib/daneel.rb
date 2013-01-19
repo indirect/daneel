@@ -10,7 +10,7 @@ module Daneel
     attr_reader :adapter, :full_name, :logger, :name, :scripts
     attr_accessor :debug_mode
 
-    def initialize(options = Options.parse(ARGV))
+    def initialize(options = {})
       @logger = Logger.new(STDOUT)
       @logger.level = Logger::INFO unless options[:verbose]
       @logger.formatter = proc do |severity, datetime, progname, msg|
@@ -20,7 +20,6 @@ module Daneel
 
       @name = options[:name] || "daneel"
       @full_name = options[:full_name] || options[:name] || "R. Daneel Olivaw"
-      @server = Server.new(options[:server]) if options[:server]
       @debug_mode = true # who are we kidding
 
       @scripts = Script.require_all.map{|k| k.new(self) }
@@ -48,7 +47,6 @@ module Daneel
     end
 
     def run
-      @server.run if @server
       # TODO add i18n so that people can customize their bot's attitude
       # TODO add Confabulator processing so the bot can be chatty without being static
       #   http://titusd.co.uk/2010/03/04/i18n-internationalization-without-rails/
