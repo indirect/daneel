@@ -38,7 +38,7 @@ module Daneel
 
       return message
     rescue => e
-      msg = "#{e.class}: #{e.message}\n  #{e.backtrace.join('  \n')}"
+      msg = %|#{e.class}: #{e.message}\n  #{e.backtrace.join("\n  ")}|
       logger.error msg
       adapter.say "crap, something went wrong. :(", msg if @debug_mode
     end
