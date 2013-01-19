@@ -24,9 +24,9 @@ module Daneel
         #   # question questioners, exclaim at exclaimers, dot dotters
         #   message.body.match(/(\?|\!|\.)$/)
         #   room.say(person + $1.to_s)
-        when /^hey|hi|hello|sup|howdy/i
+        when /^(hey|hi|hello|sup|howdy)/i
           # room.say("#{$1} #{person}")
-          room.say("#{$1}")
+          room.say "#{$1}"
         when /how are things|how's it going/
           room.say [
             "Oh, you know, the usual.",
