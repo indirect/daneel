@@ -18,7 +18,7 @@ module Daneel
 
         while text = Readline.readline("> ", true)
           next if text.empty?
-          message = Message.new(text, @room, Time.now, "text")
+          message = Message.new(text, Time.now, "text")
           robot.receive @room, message
         end
       end

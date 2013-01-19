@@ -2,11 +2,11 @@ require 'shellwords'
 
 module Daneel
   class Message
-    attr_reader :command, :finished, :room, :text, :time, :type
-    attr_accessor :args, :user
+    attr_reader :command, :done, :room, :text, :time, :type
+    attr_accessor :args
 
-    def initialize(text, room, time = Time.now, type = :text)
-      @text, @room, @time, @type = text, room, time, type
+    def initialize(text, time = Time.now, type = :text)
+      @text, @time, @type = text, time, type
     end
 
     def command=(text)
@@ -19,8 +19,7 @@ module Daneel
     end
 
     def inspect
-      "#<#{self.class} #{time.inspect} #{type.inspect} " +
-        "@room=#{@room} @finished=#{@finished}>"
+      "#<#{self.class} #{text.inspect} #{time.inspect} #{type.inspect}>"
     end
 
   end

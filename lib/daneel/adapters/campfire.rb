@@ -63,10 +63,10 @@ module Daneel
           next if data["user_id"] == me["id"]
 
           text = data["body"]
-          room = @rooms.find{|r| r.id == data["room_id"] }
           time = Time.parse(data["created_at"]) rescue Time.now
           type = data["type"].gsub(/Message$/, '').downcase
-          message = Message.new(text, room, time, type)
+          message = Message.new(text, time, type)
+          room = @rooms.find{|r| r.id == data["room_id"] }
           robot.receive room, message
         end
       end
