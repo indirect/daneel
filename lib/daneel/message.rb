@@ -12,6 +12,8 @@ module Daneel
     def command=(text)
       @command = text
       @args = text ? Shellwords.split(text) : nil
+    rescue ArgumentError # shellwords didn't like this
+      @args = nil
     end
 
     def done!
