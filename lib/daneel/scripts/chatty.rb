@@ -7,10 +7,10 @@ module Daneel
       def receive(room, message)
         case message.text
         when /^(night|good ?night)(,?\s(all|every(body|one)))$/i
-          bot.say "goodnight, #{message.user.name}"
+          room.say "goodnight, #{message.user.name}"
           message.finish
         when /^(morning|good ?morning)(,?\s(all|every(body|one)))$/i
-          bot.say "good morning, #{message.user.name}"
+          room.say "good morning, #{message.user.name}"
           message.finish
         end
       end
