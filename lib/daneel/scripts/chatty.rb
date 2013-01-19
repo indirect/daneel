@@ -27,11 +27,12 @@ module Daneel
         when /^(hey|hi|hello|sup|howdy)/i
           # room.say("#{$1} #{person}")
           room.say "#{$1}"
-        when /how are things|how's it going/
+        when /how are (you|things)|how\'s it (going|hanging)/i
           room.say [
             "Oh, you know, the usual.",
             "can't complain",
-            "alright, how about you?"
+            "alright, how about you?",
+            "people say things, I say things back"
           ].sample
         when /(^later|(?:good\s*)?bye)/i
           # room.say("#{$1} #{person}")
