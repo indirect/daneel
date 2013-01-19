@@ -6,7 +6,7 @@ module Daneel
 
       def receive(room, message)
         case message.command
-        when /^echo (.+)/
+        when /^(?:echo|say)\s(.+)/
           room.say $1
         end
       end

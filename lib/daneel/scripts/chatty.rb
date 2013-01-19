@@ -6,6 +6,7 @@ module Daneel
 
       # TODO uncomment all the named things once we have users
       def receive(room, message)
+        # Said to the room in general
         case message.text
         when /^(night|good ?night)(,?\s(all|every(body|one)))$/i
           room.say "goodnight"#, #{user.name}"
@@ -15,6 +16,7 @@ module Daneel
           return message.done!
         end
 
+        # Said directly to the bot
         case message.command
         when nil
           # don't reply to things not addressed to the bot
@@ -22,11 +24,15 @@ module Daneel
         #   # question questioners, exclaim at exclaimers, dot dotters
         #   message.body.match(/(\?|\!|\.)$/)
         #   room.say(person + $1.to_s)
-        when /say\s+(.*)/
-          room.say($1)
-        when /^(hey|hi|hello|sup|howdy)/i
+        when /^hey|hi|hello|sup|howdy/i
           # room.say("#{$1} #{person}")
           room.say("#{$1}")
+        when /how are things|how's it going/
+          room.say [
+            "Oh, you know, the usual.",
+            "can't complain",
+            "alright, how about you?"
+          ].sample
         when /(^later|(?:good\s*)?bye)/i
           # room.say("#{$1} #{person}")
           room.say("#{$1}")
@@ -38,7 +44,7 @@ module Daneel
           ].sample
         when /(^|you|still)\s*there/i, /\byt\b/i
           room.say %w{Yup y}.sample
-        when /(wake up|you awake)/i
+        when /wake up|you awake/i
           room.say("yo")
         when /thanks|thank you/i
           room.say ["No problem.", "np", "any time", "that's what I'm here for", "You're welcome."].sample
@@ -59,7 +65,7 @@ module Daneel
             "later",
             "see ya",
           ].sample
-        when /^(?:get|grab|fetch|bring|need)(?: (.*?))?(?: (?:a|some))? coffee$/i
+        when /^(?:get|grab|fetch|bring)(?: (.*?))?(?: (?:a|some))? coffee$/i
           person = $1
           if person =~ /(me|us)/
             person, do_they = "you", "do you"
