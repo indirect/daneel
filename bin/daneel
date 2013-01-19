@@ -1,6 +1,4 @@
 require 'daneel'
-require 'daneel/bot'
-require 'daneel/options'
 
 trap(:INT) do
   puts "Quitting...\n"
@@ -10,7 +8,9 @@ end
 options = Daneel::Options.parse(ARGV)
 
 if options.has_key?(:server)
-  Daneel::Server.new(options.delete(:server)).run
+  require 'daneel/server'
+  sopts = options.delete(:server)
+  Daneel::Server.new(sopts).run
 end
 
 Daneel::Bot.new(options).run
