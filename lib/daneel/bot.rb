@@ -27,12 +27,12 @@ module Daneel
       logger.debug "Using the #{adapter.class} adapter"
     end
 
-    def receive(message)
-      logger.debug "Got message: #{message}"
+    def receive(room, message)
+      logger.debug "Got message: #{message.text} in room #{room.id}"
       message.command = command_from(message.text)
 
       scripts.each do |script|
-        script.receive message
+        script.receive room, message
         break if message.finished
       end
 

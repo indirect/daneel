@@ -4,12 +4,13 @@ module Daneel
   module Scripts
     class Help < Daneel::Script
 
-      def receive(message)
+      def receive(room, message)
         case message.command
         when /help$/
-          say helps.map{|s| s.join(" - ") }.sort.join("\n")
+          col = helps.keys.map(&:length).max + 2
+          room.say helps.map{|k,v| "%-#{col}s %s" % [k,v] }.sort.join("\n")
         when /help (.+)/
-          say helps[$1]
+          room.say helps[$1]
         end
       end
 

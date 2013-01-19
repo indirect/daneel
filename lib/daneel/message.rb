@@ -5,7 +5,7 @@ module Daneel
     attr_reader :command, :finished, :room, :text, :time, :type
     attr_accessor :args, :user
 
-    def initialize(text, room_id, time = Time.now, type = :text)
+    def initialize(text, room, time = Time.now, type = :text)
       @text, @room, @time, @type = text, room, time, type
     end
 
@@ -18,8 +18,8 @@ module Daneel
       @finished = true
     end
 
-    def to_s
-      text || "#<#{self.class} #{time.inspect} #{type.inspect} " +
+    def inspect
+      "#<#{self.class} #{time.inspect} #{type.inspect} " +
         "@room=#{@room} @finished=#{@finished}>"
     end
 

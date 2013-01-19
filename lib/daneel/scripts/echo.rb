@@ -4,11 +4,15 @@ module Daneel
   module Scripts
     class Echo < Daneel::Script
 
-      def receive(message)
+      def receive(room, message)
         case message.command
         when /^echo (.+)/
-          say $1
+          room.say $1
         end
+      end
+
+      def help
+        {"echo TEXT" => "are you copying me? stop copying me!"}
       end
 
     end
