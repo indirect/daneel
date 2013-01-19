@@ -1,30 +1,35 @@
 require 'daneel/script'
 
-class HelpScript < Daneel::Script
-  def receive(message)
-    case message.command
-    when /help$/
-      say helps.map{|s| s.join(" - ") }.sort.join("\n")
-    when /help (.+)/
-      say helps[$1]
-    end
-  end
+module Daneel
+  module Scripts
+    class Help < Daneel::Script
 
-  def help
-    {"help" => "show this help summary"}
-  end
-
-private
-
-  def helps
-    @helps ||= begin
-      helps = {}
-      robot.scripts.each do |script|
-        helps.merge!(script.help)
+      def receive(message)
+        case message.command
+        when /help$/
+          say helps.map{|s| s.join(" - ") }.sort.join("\n")
+        when /help (.+)/
+          say helps[$1]
+        end
       end
-      logger.debug "Found helps: #{helps.inspect}"
-      helps
+
+      def help
+        {"help" => "show this help summary"}
+      end
+
+    private
+
+      def helps
+        @helps ||= begin
+          helps = {}
+          robot.scripts.each do |script|
+            helps.merge!(script.help)
+          end
+          logger.debug "Found helps: #{helps.inspect}"
+          helps
+        end
+      end
+
     end
   end
-
 end

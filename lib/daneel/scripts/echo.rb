@@ -1,12 +1,16 @@
 require 'daneel/script'
 
-class EchoScript < Daneel::Script
+module Daneel
+  module Scripts
+    class Echo < Daneel::Script
 
-  def receive(message)
-    case message.command
-    when /^echo (.+)/
-      say $1
+      def receive(message)
+        case message.command
+        when /^echo (.+)/
+          say $1
+        end
+      end
+
     end
   end
-
 end
