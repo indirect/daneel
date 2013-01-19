@@ -13,7 +13,7 @@ module Daneel
         @rooms = ENV['CAMPFIRE_ROOM_IDS'].split(",").map do |id|
           Room.new(id.to_i, self)
         end
-        @fire  = Sparks::Campfire.new(domain, token, :logger => logger)
+        @fire = Sparks::Campfire.new(domain, token, :logger => logger)
       end
 
       def run
@@ -27,11 +27,12 @@ module Daneel
       end
 
       def say(id, *texts)
+        room = @fire.room(id) || raise("No room with id #{id}")
         texts.each do |text|
           if text =~ /\n/
-            @fire.room(id).paste(text.to_s)
+            room.paste(text.to_s)
           else
-            @fire.room(id).speak(text.to_s)
+            room.speak(text.to_s)
           end
         end
       end
