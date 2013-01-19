@@ -13,16 +13,8 @@ module Daneel
           options[:verbose] = v
         end
 
-        opts.on("-s", "--server", "Run the HTTP server as well as the adapter") do |s|
-          options[:server] = {}
-        end
-
-        opts.on("-p", "--port", "Set the port that the HTTP server will run on") do |p|
-          if options[:server]
-            options[:server][:port] = p
-          else
-            abort("the --port option requires that you set the --server option as well")
-          end
+        opts.on("-s [PORT]", "--server=[PORT]", "Run the HTTP server on PORT (default 3333)") do |port|
+          options[:server] = {:port => port}
         end
 
         opts.on("-a", "--adapter=NAME", "Which interaction adapter to use") do |name|
