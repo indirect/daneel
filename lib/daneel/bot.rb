@@ -7,7 +7,7 @@ module Daneel
     attr_accessor :debug_mode
 
     def initialize(options = {})
-      @logger = Daneel.logger || Daneel::Logger.new
+      @logger = options[:logger] || Daneel::Logger.new
       @name = options[:name] || "daneel"
       @full_name = options[:full_name] || options[:name] || "R. Daneel Olivaw"
       @debug_mode = options[:verbose]
