@@ -6,6 +6,7 @@ trap(:INT) do
 end
 
 options = Daneel::Options.parse(ARGV)
+Daneel.logger = Daneel::Logger.new(STDOUT, options[:verbose])
 
 if options.has_key?(:server)
   require 'daneel/server'

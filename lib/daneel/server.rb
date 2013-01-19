@@ -1,16 +1,18 @@
 require 'net/http/persistent'
+require 'daneel'
 
 module Daneel
   class Server
+    attr_reader :logger
 
     def initialize(options = {})
       require 'daneel/web'
-      @options = {
-        :app => Daneel::Web, :server => "puma",
-        :port => ENV["PORT"] || "3333"
-      }.merge(options)
+      @logger = Daneel.logger || Daneel::Logger.new
+      @options = {:app => Daneel::Web, :server => "puma"}.merge(options)
+      @options[:port] = ENV["PORT"] if ENV["PORT"]
       # Rack expects the port key to be capitalized. Sad day.
       @options[:Port] = @options.delete(:port) if @options[:port]
+      logger.debug "Server with options: #{@options}"
     end
 
     def run

@@ -1,4 +1,3 @@
-require 'logger'
 require 'daneel/adapter'
 require 'daneel/script'
 
@@ -8,16 +7,10 @@ module Daneel
     attr_accessor :debug_mode
 
     def initialize(options = {})
-      @logger = Logger.new(STDOUT)
-      @logger.level = Logger::INFO unless options[:verbose]
-      @logger.formatter = proc do |severity, datetime, progname, msg|
-        "#{severity} #{msg}\n"
-      end
-      @logger.debug "Created with options #{options.inspect}"
-
+      @logger = Daneel.logger || Daneel::Logger.new
       @name = options[:name] || "daneel"
       @full_name = options[:full_name] || options[:name] || "R. Daneel Olivaw"
-      @debug_mode = true # who are we kidding
+      @debug_mode = options[:verbose]
 
       @scripts = Script.require_all.map{|k| k.new(self) }
       logger.debug "Booted with scripts: #{@scripts.map(&:class).inspect}"
@@ -47,7 +40,7 @@ module Daneel
       # TODO add i18n so that people can customize their bot's attitude
       # TODO add Confabulator processing so the bot can be chatty without being static
       #   http://titusd.co.uk/2010/03/04/i18n-internationalization-without-rails/
-      @adapter.announce "Greetings. I am #{full_name}, and I am ready to " +
+      @adapter.announce "Greetings. I am #{full_name}, ready to " +
         "assist you in your many and varied endeavours."
       @adapter.run
     rescue Interrupt
