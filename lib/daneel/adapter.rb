@@ -15,7 +15,11 @@ module Daneel
       logger.error "#{self.class} hasn't defined \#run"
     end
 
-    def say(message)
+    def say(room_id, message)
+      logger.error "#{self.class} hasn't defined \#say"
+    end
+
+    def say_all(message)
       logger.error "#{self.class} hasn't defined \#say"
     end
 

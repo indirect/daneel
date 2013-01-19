@@ -52,8 +52,7 @@ module Daneel
       # TODO add i18n so that people can customize their bot's attitude
       # TODO add Confabulator processing so the bot can be chatty without being static
       #   http://titusd.co.uk/2010/03/04/i18n-internationalization-without-rails/
-      adapter.say "Greetings. #{full_name}, ready to assist."
-      adapter.run
+      @adapter.run
     rescue Interrupt
       adapter.leave
     end

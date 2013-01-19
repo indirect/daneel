@@ -12,13 +12,17 @@ module Daneel
 
         while text = Readline.readline("#{@robot.name}> ", true)
           next if text.empty?
-          message = Message.new(text, Time.now, "text")
+          message = Message.new(text, "shell", Time.now, "text")
           robot.receive message
         end
       end
 
-      def say(message)
-        puts message
+      def say(room, text)
+        say_all text
+      end
+
+      def say_all(text)
+        puts text
       end
 
     end

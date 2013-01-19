@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/indirect/sparks.git
-  revision: f95b2e02d8d74d1c8aa51d3df676ddf34e53d05f
+  revision: 97fed38a1f71932c874295a57da05af890b0506e
   branch: master
   specs:
     sparks (0.4)
