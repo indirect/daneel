@@ -7,7 +7,7 @@ module Daneel
 
     def initialize(options = {})
       require 'daneel/web'
-      @logger = Daneel.logger || Daneel::Logger.new
+      @logger = options[:logger] || Daneel::Logger.new
       @options = {:app => Daneel::Web, :server => "puma"}.merge(options)
       @options[:port] = ENV["PORT"] if ENV["PORT"]
       # Rack expects the port key to be capitalized. Sad day.
