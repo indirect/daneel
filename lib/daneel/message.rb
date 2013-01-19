@@ -3,9 +3,7 @@ require 'shellwords'
 module Daneel
   class Message
     attr_reader :command, :finished, :room, :text, :time, :type
-    attr_accessor :args
-    # TODO add user to message for replies
-    # TODO add room to message for replies
+    attr_accessor :args, :user
 
     def initialize(text, room_id, time = Time.now, type = :text)
       @text, @room, @time, @type = text, room, time, type
