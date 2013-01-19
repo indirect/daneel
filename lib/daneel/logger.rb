@@ -9,7 +9,6 @@ module Daneel
       self.formatter = proc do |severity, datetime, progname, msg|
         "#{severity} #{msg}\n"
       end
-      p self
     end
 
     def inspect
