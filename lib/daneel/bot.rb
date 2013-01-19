@@ -11,7 +11,7 @@ module Daneel
       @logger = Logger.new(STDOUT)
       @logger.level = Logger::INFO unless options[:verbose]
       @logger.formatter = proc do |severity, datetime, progname, msg|
-        "#{severity} [#{Process.pid}] #{msg}\n"
+        "#{severity} #{msg}\n"
       end
       @logger.debug "Created with options #{options.inspect}"
 
