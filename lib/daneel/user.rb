@@ -14,7 +14,7 @@ module Daneel
     end
 
     def to_s
-      [@short_name, @short_name.downcase, @initials].sample
+      [short_name, short_name.downcase, initials].sample
     end
 
   end
