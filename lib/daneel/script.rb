@@ -36,9 +36,6 @@ module Daneel
 
       # TODO accept method for script classes
       # should handle options like :text, :enter, :leave, :topic, :all
-
-      # TODO priority method for script classes
-      # should allow scripts to run before others
     end
 
   end

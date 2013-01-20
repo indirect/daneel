@@ -10,10 +10,8 @@ module Daneel
         case message.text
         when /^(night|good ?night)(,?\s(all|every(body|one)))$/i
           room.say "goodnight"#, #{user.name}"
-          return message.done!
         when /^(morning|good ?morning)(,?\s(all|every(body|one)))$/i
           room.say "good morning"#, #{user.name}"
-          return message.done!
         end
 
         # Said directly to the bot
