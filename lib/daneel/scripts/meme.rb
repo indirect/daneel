@@ -40,6 +40,9 @@ module Daneel
         when /^stop hitting yourself$/i
           # and the angel said to him, Stop hitting yourself!
           room.say "https://img.skitch.com/20110316-q7h49p69pjhhyy8756rha2a1jf.jpg"
+        when /^[:*(]php[:*)]$/
+          # PHP: training wheels without the bike
+          room.say "http://tnx.nl/php.jpg"
         end
       end
 
