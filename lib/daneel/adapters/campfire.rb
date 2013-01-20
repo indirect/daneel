@@ -38,7 +38,6 @@ module Daneel
         @rooms.each do |room|
           say room.id, *texts
         end
-        texts
       end
 
       def leave
