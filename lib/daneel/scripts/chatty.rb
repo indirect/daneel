@@ -4,27 +4,25 @@ module Daneel
   module Scripts
     class Chatty < Daneel::Script
 
-      # TODO uncomment all the named things once we have users
       def receive(room, message, user)
         # Said to the room in general
         case message.text
         when /^(night|good ?night)(,?\s(all|every(body|one)))$/i
-          room.say "goodnight"#, #{user.name}"
+          room.say "goodnight, #{user}"
         when /^(morning|good ?morning)(,?\s(all|every(body|one)))$/i
-          room.say "good morning"#, #{user.name}"
+          room.say "good morning, #{user}"
         end
 
         # Said directly to the bot
         case message.command
         when nil
           # don't reply to things not addressed to the bot
-        # when /^\s*$/
-        #   # question questioners, exclaim at exclaimers, dot dotters
-        #   message.body.match(/(\?|\!|\.)$/)
-        #   room.say(person + $1.to_s)
+        when /^\s*$/
+          # question questioners, exclaim at exclaimers, dot dotters
+          message.body.match(/(\?|\!|\.)$/)
+          room.say(user + $1.to_s)
         when /^(hey|hi|hello|sup|howdy)/i
-          # room.say("#{$1} #{person}")
-          room.say "#{$1}"
+          room.say("#{$1} #{user}")
         when /how are (you|things)|how\'s it (going|hanging)/i
           room.say [
             "Oh, you know, the usual.",
@@ -33,13 +31,12 @@ module Daneel
             "people say things, I say things back"
           ].sample
         when /(^later|(?:good\s*)?bye)/i
-          # room.say("#{$1} #{person}")
-          room.say("#{$1}")
+          room.say("#{$1} #{user}")
         when /you rock|awesome|cool|nice/i
           room.say [
-            # "Thanks, #{person}, you're pretty cool yourself.",
+            "Thanks, #{user}, you're pretty cool yourself.",
             "I try.",
-            # "Aw, shucks. Thanks, #{person}."
+            "Aw, shucks. Thanks, #{user}."
           ].sample
         when /(^|you|still)\s*there/i, /\byt\b/i
           room.say %w{Yup y}.sample
@@ -49,8 +46,8 @@ module Daneel
           room.say ["No problem.", "np", "any time", "that's what I'm here for", "You're welcome."].sample
         when /^(good\s?night|(?:g')?night)$/i
           room.say [
-            # "see you later, #{person}",
-            # "later, #{person}",
+            "see you later, #{user}",
+            "later, #{user}",
             "night",
             "goodnight",
             "bye",
@@ -58,8 +55,8 @@ module Daneel
           ].sample
         when /^(see you(?: later)?)$/i
           room.say [
-            # "see you later, #{person}",
-            # "later, #{person}",
+            "see you later, #{user}",
+            "later, #{user}",
             "bye",
             "later",
             "see ya",
@@ -83,21 +80,21 @@ module Daneel
           ].sample
         else
           room.say [
-            # "I have no idea what you're talking about, #{person}.",
+            "I have no idea what you're talking about, #{user}.",
             "eh?",
             "oh, interesting",
-            # "say more, #{person}",
-            # "#{person}, you do realize that you're talking to a bot with a very limited vocabulary, don't you?",
-            # "Whatever, #{person}.",
+            "say more, #{user}",
+            "#{user}, you do realize that you're talking to a bot with a very limited vocabulary, don't you?",
+            "Whatever, #{user}.",
             # TODO implement Bot#other_person
-            # "#{bot.other_person(person)}, tell #{person} to leave me alone.",
-            # "Not now, #{person}.",
+            # "#{bot.other_person(user)}, tell #{user} to leave me alone.",
+            "Not now, #{user}.",
             "brb crying",
-            # "what do you think, #{person}?",
+            "what do you think, #{user}?",
             "That's really something.",
             "but what can I do? I'm just a lowly bot",
             "I'll get some electrons on that right away",
-            # "How do you feel when someone says '#{message.command}' to you, #{person}?"
+            "How do you feel when someone says '#{message.command}' to you, #{user}?"
           ].sample
         end
       end
