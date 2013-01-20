@@ -6,3 +6,7 @@ gemspec
 # Override gem dependencies that aren't released yet
 gem 'sinatra', :github => 'sinatra'
 gem 'sparks', :github => 'indirect/sparks', :branch => 'master'
+
+group :development do
+  gem 'pry-debugger'
+end
