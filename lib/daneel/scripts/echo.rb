@@ -8,6 +8,7 @@ module Daneel
         case message.command
         when /^(?:echo|say)\s(.+)/
           room.say $1
+          message.done!
         end
       end
 

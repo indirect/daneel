@@ -9,8 +9,7 @@ module Daneel
         when /help$/
           col = helps.keys.map(&:length).max + 2
           room.say helps.map{|k,v| "%-#{col}s %s" % [k,v] }.sort.join("\n")
-        when /help (.+)/
-          room.say helps[$1]
+          message.done!
         end
       end
 
