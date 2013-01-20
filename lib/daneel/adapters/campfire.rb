@@ -15,6 +15,7 @@ module Daneel
           Room.new(id.to_i, self, @fire.room(id))
         end
         @users = []
+        @me = @fire.me
       end
 
       def run
@@ -47,10 +48,6 @@ module Daneel
         @rooms.each{|r| @fire.room(r.id).leave }
       end
 
-      def me
-        @me ||= @fire.me
-      end
-
       def find_user(id)
         return @users[id] if @users[id]
 
@@ -68,7 +65,7 @@ module Daneel
 
           # TODO pass through self-messages, once they are filtered by
           # the accept? method on scripts
-          next if data["user_id"] == me["id"]
+          next if data["user_id"] == @me["id"]
 
           text = data["body"]
           time = Time.parse(data["created_at"]) rescue Time.now
