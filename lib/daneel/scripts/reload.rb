@@ -5,7 +5,7 @@ module Daneel
   module Scripts
     class Reload < Daneel::Script
 
-      def receive(room, message)
+      def receive(room, message, user)
         case message.command
         when /^update$/
           return unless in_git?

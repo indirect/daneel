@@ -4,7 +4,7 @@ module Daneel
   module Scripts
     class Help < Daneel::Script
 
-      def receive(room, message)
+      def receive(room, message, user)
         case message.command
         when /help$/
           col = helps.keys.map(&:length).max + 2

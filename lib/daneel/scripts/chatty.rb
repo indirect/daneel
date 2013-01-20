@@ -5,7 +5,7 @@ module Daneel
     class Chatty < Daneel::Script
 
       # TODO uncomment all the named things once we have users
-      def receive(room, message)
+      def receive(room, message, user)
         # Said to the room in general
         case message.text
         when /^(night|good ?night)(,?\s(all|every(body|one)))$/i

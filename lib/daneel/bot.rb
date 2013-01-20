@@ -20,16 +20,15 @@ module Daneel
       logger.debug "Using the #{adapter.class} adapter"
     end
 
-    def receive(room, message)
-      logger.debug "[room #{room.id}] #{message.text}"
+    def receive(room, message, user)
+      logger.debug "[room #{room.id}] #{user.name}: #{message.text}"
       message.command = command_from(message.text)
 
       scripts.each do |script|
-        script.receive room, message
+        script.receive room, message, user
         break if message.done
       end
-
-      return message
+      message
     rescue => e
       msg = %|#{e.class}: #{e.message}\n  #{e.backtrace.join("\n  ")}|
       logger.error msg

@@ -1,6 +1,4 @@
 require 'daneel/adapter'
-require 'daneel/message'
-require 'daneel/room'
 require 'readline'
 
 module Daneel
@@ -9,7 +7,8 @@ module Daneel
 
       def initialize(robot)
         super
-        @room = Room.new(1, self)
+        @room = Room.new("shell", self)
+        @user = User.new(1, ENV['USER'])
       end
 
       def run
@@ -19,7 +18,7 @@ module Daneel
         while text = Readline.readline("> ", true)
           next if text.empty?
           message = Message.new(text, Time.now, "text")
-          robot.receive @room, message
+          robot.receive @room, message, @user
         end
       end
 

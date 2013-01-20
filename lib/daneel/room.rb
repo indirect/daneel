@@ -1,9 +1,10 @@
 module Daneel
   class Room
-    attr_reader :id
+    attr_reader :id, :name
+    attr_accessor :data
 
-    def initialize(id, adapter)
-      @id, @adapter = id, adapter
+    def initialize(id, adapter, data = nil)
+      @id, @adapter, @data = id, adapter, data
     end
 
     def say(*strings)

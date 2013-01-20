@@ -4,9 +4,10 @@ module Daneel
   # adapter, and only needs to be unique within the context of that adapter.
   class User
     attr_reader :id, :name
+    attr_accessor :data
 
-    def initialize(id, name)
-      @id, @name = id, name
+    def initialize(id, name, data = nil)
+      @id, @name, @data = id, name, data
     end
 
   end

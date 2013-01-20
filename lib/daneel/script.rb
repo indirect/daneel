@@ -9,7 +9,7 @@ module Daneel
       # message.user != robot.user
     end
 
-    def receive(room, message)
+    def receive(room, message, user)
       logger.error "#{self.class} hasn't defined #receive"
     end
 

@@ -4,7 +4,7 @@ module Daneel
   module Scripts
     class Meme < Daneel::Script
 
-      def receive(room, message)
+      def receive(room, message, user)
         case message.text
         when /^[\:\*\(e]?facepalm[\:\*\)]?|EFACEPALM|:fp|m\($/i
           room.say_random [

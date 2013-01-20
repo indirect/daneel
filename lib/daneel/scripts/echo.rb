@@ -4,7 +4,7 @@ module Daneel
   module Scripts
     class Echo < Daneel::Script
 
-      def receive(room, message)
+      def receive(room, message, user)
         case message.command
         when /^(?:echo|say)\s(.+)/
           room.say $1

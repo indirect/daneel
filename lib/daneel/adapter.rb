@@ -1,6 +1,7 @@
 require 'daneel/message'
 require 'daneel/plugin'
 require 'daneel/room'
+require 'daneel/user'
 
 module Daneel
   class Adapter < Plugin

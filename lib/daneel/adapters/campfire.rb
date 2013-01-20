@@ -10,10 +10,11 @@ module Daneel
         super
         domain = ENV['CAMPFIRE_SUBDOMAIN']
         token  = ENV['CAMPFIRE_API_TOKEN']
+        @fire  = Sparks::Campfire.new(domain, token, :logger => logger)
         @rooms = ENV['CAMPFIRE_ROOM_IDS'].split(",").map do |id|
-          Room.new(id.to_i, self)
+          Room.new(id.to_i, self, @fire.room(r.id))
         end
-        @fire = Sparks::Campfire.new(domain, token, :logger => logger)
+        @users = []
       end
 
       def run
@@ -55,6 +56,17 @@ module Daneel
         @me ||= @fire.me
       end
 
+      def find_user(id)
+        return @users[id] if @users[id]
+
+        udata = @fire.user(id)
+        @users[id] = User.new(udata["id"], udata["name"], udata)
+      end
+
+      def find_room(id)
+        @rooms.find{|r| r.id == id }
+      end
+
       def watch_room(room)
         @fire.room(room.id).watch do |data|
           next if data["type"] == "TimestampMessage"
@@ -67,8 +79,9 @@ module Daneel
           time = Time.parse(data["created_at"]) rescue Time.now
           type = data["type"].gsub(/Message$/, '').downcase
           message = Message.new(text, time, type)
-          room = @rooms.find{|r| r.id == data["room_id"] }
-          robot.receive room, message
+          room = find_room(data["room_id"])
+          user = find_user(data["user_id"])
+          robot.receive room, message, user
         end
       end
 
