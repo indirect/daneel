@@ -9,8 +9,7 @@ module Daneel
     def initialize(id, name, data = nil)
       @id, @name, @data = id, name, data
 
-      @initials = name.split(" ").select{|s| s[0] == s[0].upcase }.
-        map{|s| s[0] }.join("")
+      @initials   = name.gsub(/\P{Upper}/,'')
       @short_name = name.split(" ").first
     end
 
