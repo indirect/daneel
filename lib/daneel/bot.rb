@@ -21,7 +21,7 @@ module Daneel
     end
 
     def receive(room, message)
-      logger.debug "Got message: #{message.text} in room #{room.id}"
+      logger.debug "[room #{room.id}] #{message.text}"
       message.command = command_from(message.text)
 
       scripts.each do |script|
