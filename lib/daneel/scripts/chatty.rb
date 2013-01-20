@@ -61,9 +61,9 @@ module Daneel
             "later",
             "see ya",
           ].sample
-        when /^(?:get|grab|fetch|bring)(?: (.*?))?(?: (?:a|some))? coffee$/i
+        when /^(?:(?:get|grab|fetch|bring) (.*?)|i need|time for)(?: (?:a|some))? coffee$/i
           person = $1
-          if person =~ /(me|us)/
+          if person =~ /i|me|us/
             person, do_they = "you", "do you"
           else
             do_they = "does #{person}"
