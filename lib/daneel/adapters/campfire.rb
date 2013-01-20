@@ -10,9 +10,9 @@ module Daneel
         super
         domain = ENV['CAMPFIRE_SUBDOMAIN']
         token  = ENV['CAMPFIRE_API_TOKEN']
-        @fire  = Sparks::Campfire.new(domain, token, :logger => logger)
+        @fire  = Sparks.new(domain, token, :logger => logger)
         @rooms = ENV['CAMPFIRE_ROOM_IDS'].split(",").map do |id|
-          Room.new(id.to_i, self, @fire.room(r.id))
+          Room.new(id.to_i, self, @fire.room(id))
         end
         @users = []
       end
@@ -28,13 +28,8 @@ module Daneel
       end
 
       def say(id, *texts)
-        room = @fire.room(id) || raise("No room with id #{id}")
         texts.each do |text|
-          if text =~ /\n/
-            room.paste(text.to_s)
-          else
-            room.speak(text.to_s)
-          end
+          text =~ /\n/ ? @fire.paste(id, text) : @fire.speak(id, text)
         end
       end
 
@@ -68,7 +63,7 @@ module Daneel
       end
 
       def watch_room(room)
-        @fire.room(room.id).watch do |data|
+        @fire.watch(room.id) do |data|
           next if data["type"] == "TimestampMessage"
 
           # TODO pass through self-messages, once they are filtered by
