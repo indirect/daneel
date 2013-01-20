@@ -19,7 +19,7 @@ module Daneel
         when /^i see your problem/i
           # pony mechanic
           room.say "https://img.skitch.com/20110224-8fmfwdmg6kkrcpijhamhqu7tm6.jpg"
-        when /^wfm|womm|works on my machine$/i
+        when /^works on my machine|womm$/i
           # works on my machine
           room.say "https://img.skitch.com/20110224-jrcf6e4gc936a2mxc3mueah2in.png"
         when /^stacktrace or gtfo|stacktrace or it didn't happen|stacktrace\!$/i
