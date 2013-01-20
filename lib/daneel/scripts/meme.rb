@@ -7,12 +7,12 @@ module Daneel
       def receive(room, message, user)
         case message.text
         when /^[\:\*\(e]?facepalm[\:\*\)]?|EFACEPALM|:fp|m\($/i
-          room.say_random [
+          room.say [
             # picard facepalm
             "https://img.skitch.com/20110224-875h7w1654tgdhgrxm9bikhkwq.jpg",
             # polar bear facepalm
             "https://img.skitch.com/20110224-bsd2ds251eit8d3t1y2mkjtfx8.jpg"
-          ]
+          ].sample
         when /^[\:\*\(e]?double ?facepalm[\:\*\)]?|:fpfp|m\( m\($/i
           # picard + riker facepalm
           room.say "https://img.skitch.com/20110224-ncacgpudhfr2s4te6nswenxaqt.jpg"
