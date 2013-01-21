@@ -9,7 +9,11 @@ module Daneel
     def initialize(id, name, data = nil)
       @id, @name, @data = id, name, data
 
-      @initials   = name.gsub(/\P{Upper}/,'')
+      # First, try to get initials from the upper-case letters
+      @initials = name.gsub(/\P{Upper}/,'')
+      # If that fails, just go with the first letter of each word
+      @initials = name.gsub(/(?<!^|\s)./,'') if @initials.empty?
+      # Short name is just the bit up to the first space
       @short_name = name.split(" ").first
     end
 
