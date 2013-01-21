@@ -30,8 +30,15 @@ module Daneel
 
       def require_all
         glob = File.expand_path("../scripts/*.rb", __FILE__)
-        Dir[glob].each{|script| require script }
+        Dir[glob].each{|script| try_require script }
         return list
+      end
+
+      def try_require(script)
+        require script
+      rescue DepError => e
+        logger.warn "Couldn't load #{script}"
+        logger.warn "  #{e.message}"
       end
 
       # TODO accept method for script classes
