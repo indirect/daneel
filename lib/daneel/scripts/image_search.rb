@@ -23,6 +23,10 @@ module Daneel
         end
       end
 
+      def help
+        {"find a THING" => "scours the internets for a picture of THING to show you"}
+      end
+
       def find_image_url_for(search)
         logger.debug "Searching for images of #{search}"
         query = CGI.escape("'#{search.gsub(/'/, "\\\\'")}'")
