@@ -31,8 +31,7 @@ module Daneel
       http = Net::HTTP::Persistent.new 'daneel'
       loop do
         http.request uri
-        # Heroku kills dynos after 1h
-        sleep (60 * 60) - 5
+        sleep (60 * 20) # 20m
       end
     end
 
