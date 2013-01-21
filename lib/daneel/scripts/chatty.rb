@@ -3,6 +3,8 @@ require 'daneel/script'
 module Daneel
   module Scripts
     class Chatty < Daneel::Script
+      # TODO make this script the last-priority script
+      # priority 20
 
       def receive(room, message, user)
         # Said to the room in general
