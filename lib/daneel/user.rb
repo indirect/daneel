@@ -1,3 +1,4 @@
+# encoding: UTF-8
 module Daneel
   # Represents a generic user. Doesn't have a room, because multiple rooms can
   # contain the same user. The user's unique identifier is supplied by the
