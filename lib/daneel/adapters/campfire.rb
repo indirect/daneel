@@ -4,7 +4,7 @@ require 'daneel/adapter'
 module Daneel
   class Adapters
     class Campfire < Daneel::Adapter
-      required_env %w(CAMPFIRE_SUBDOMAIN CAMPFIRE_API_TOKEN CAMPFIRE_ROOM_IDS)
+      requires_env %w(CAMPFIRE_SUBDOMAIN CAMPFIRE_API_TOKEN CAMPFIRE_ROOM_IDS)
 
       def initialize(robot)
         super

@@ -10,9 +10,9 @@ module Daneel
       robot.logger
     end
 
-    def self.required_env(keys)
-      keys.each do |key|
-        raise "#{key} is required!" unless ENV[key]
+    def self.requires_env(*keys)
+      keys.flatten.each do |key|
+        raise "#{self} requires ENV['#{key}'] to work" unless ENV[key]
       end
     end
 
