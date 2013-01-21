@@ -19,8 +19,8 @@ module Daneel
           # don't reply to things not addressed to the bot
         when /^\s*$/
           # question questioners, exclaim at exclaimers, dot dotters
-          message.text.match(/(\?|\!|\.)$/)
-          room.say "#{user} #{$1}"
+          message.text.match(/([?!.])$/)
+          room.say "#{user}#{$1}"
         when /^(hey|hi|hello|sup|howdy)/i
           room.say "#{$1} #{user}"
         when /how are (you|things)|how\'s it (going|hanging)/i
