@@ -31,7 +31,7 @@ module Daneel
         logger.debug "Searching for images of #{search}"
         query = CGI.escape("'#{search.gsub(/'/, "\\\\'")}'")
         uri = URI("https://api.datamarket.azure.com/Bing/Search/v1/Composite")
-        uri.query = "Sources=%27image%27&Adult=%27Off%27&$format=JSON&Query=#{query}"
+        uri.query = "Sources=%27image%27&Adult=%27Moderate%27&$format=JSON&Query=#{query}"
         request = Net::HTTP::Get.new(uri.request_uri)
         request.basic_auth 'x', @token
         response = @http.request uri, request
