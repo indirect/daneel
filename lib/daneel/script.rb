@@ -2,8 +2,6 @@ require 'daneel/plugin'
 
 module Daneel
   class Script < Plugin
-    class DepError < LoadError; end
-    class EnvError < DepError; end
 
     def accept?(message)
       true
@@ -33,12 +31,6 @@ module Daneel
 
       def files
         Dir[File.expand_path("../scripts/*.rb", __FILE__)]
-      end
-
-      def requires_env(*keys)
-        keys.flatten.each do |key|
-          raise EnvError, "#{self} requires ENV['#{key}'] to work" unless ENV[key]
-        end
       end
 
       # TODO accept method for script classes
