@@ -42,8 +42,12 @@ module Daneel
 
     def run
       # TODO add i18n so that people can customize their bot's attitude
+      # http://titusd.co.uk/2010/03/04/i18n-internationalization-without-rails/
       # TODO add Confabulator processing so the bot can be chatty without being static
-      #   http://titusd.co.uk/2010/03/04/i18n-internationalization-without-rails/
+      trap(:TERM) do
+        @adapter.announce "asked to stop, brb"
+        exit
+      end
       @adapter.announce "hey guys"
       @adapter.run
     rescue Interrupt
