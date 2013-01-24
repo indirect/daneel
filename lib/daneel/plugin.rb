@@ -12,7 +12,7 @@ module Daneel
 
     class DepError < LoadError; end
 
-    def requires_env(*keys)
+    def self.requires_env(*keys)
       keys.flatten.each do |key|
         raise DepError, "#{self} requires ENV['#{key}'] to work" unless ENV[key]
       end
