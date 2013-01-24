@@ -27,6 +27,7 @@ module Daneel
       end
 
       def announce(*strings)
+        puts
         say @room.id, *strings
       end
 
