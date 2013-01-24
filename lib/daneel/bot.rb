@@ -12,10 +12,15 @@ module Daneel
       @full_name = options[:full_name] || options[:name] || "R. Daneel Olivaw"
       @debug_mode = options[:verbose]
 
-      @scripts = Script.require_all.map{|k| k.new(self) }
+      Script.files.each{|file| try_require file }
+
+      # TODO add script priorities to replicate this
+      list = Script.list
+      list.push list.delete(Scripts::Chatty)
+
+      @scripts = list.map{|s| s.new(self) }
       logger.debug "Booted with scripts: #{@scripts.map(&:class).inspect}"
 
-      # Load the adapter
       @adapter = Adapter.named(options[:adapter] || "shell").new(self)
       logger.debug "Using the #{adapter.class} adapter"
     end
@@ -57,6 +62,12 @@ module Daneel
       m ||= text.match(/^#{name}(?:[,:]\s*|\s+)(.*)/i)
       m ||= text.match(/^\s*(.*?)(?:,\s*)?\b#{name}[.!?\s]*$/i)
       m && m[1]
+    end
+
+    def try_require(name)
+      require name
+    rescue Script::DepError => e
+      logger.warn "Couldn't load #{File.basename(name)}: #{e.message}"
     end
 
   end

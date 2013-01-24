@@ -22,6 +22,7 @@ module Daneel
 
     # Track scripts that have loaded so we can use them
     class << self
+
       def list
         @list ||= []
       end
@@ -30,10 +31,8 @@ module Daneel
         list << subclass
       end
 
-      def require_all
-        glob = File.expand_path("../scripts/*.rb", __FILE__)
-        Dir[glob].each{|script| try_require script }
-        return list
+      def files
+        Dir[File.expand_path("../scripts/*.rb", __FILE__)]
       end
 
       def requires_env(*keys)
