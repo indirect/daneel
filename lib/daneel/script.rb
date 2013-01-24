@@ -2,6 +2,8 @@ require 'daneel/plugin'
 
 module Daneel
   class Script < Plugin
+    class DepError < LoadError; end
+    class EnvError < DepError; end
 
     def accept?(message)
       true
@@ -34,11 +36,10 @@ module Daneel
         return list
       end
 
-      def try_require(script)
-        require script
-      rescue DepError => e
-        logger.warn "Couldn't load #{script}"
-        logger.warn "  #{e.message}"
+      def requires_env(*keys)
+        keys.flatten.each do |key|
+          raise EnvError, "#{self} requires ENV['#{key}'] to work" unless ENV[key]
+        end
       end
 
       # TODO accept method for script classes
