@@ -1,6 +1,6 @@
 module Daneel
   class Room
-    attr_reader :id, :name
+    attr_reader :id
     attr_accessor :data
 
     def initialize(id, adapter, data = nil)
