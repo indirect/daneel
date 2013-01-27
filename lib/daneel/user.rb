@@ -15,7 +15,7 @@ module Daneel
       # If that fails, just go with the first letter of each word
       @initials = name.gsub(/(?<!^|\s)./,'') if @initials.empty?
       # Short name is just the bit up to the first space
-      @short_name = name.scan(/^(.*?)\s/)[0].first || name
+      @short_name = name.match(/^(\S+)/)[0]
     end
 
     def to_s
