@@ -10,7 +10,7 @@ module Daneel
     end
 
     def receive(room, message, user)
-      logger.error "#{self.class} hasn't defined #receive"
+      # do stuff here!
     end
 
     def help

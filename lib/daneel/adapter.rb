@@ -7,15 +7,15 @@ module Daneel
   class Adapter < Plugin
 
     def run
-      logger.error "#{self.class} hasn't defined \#run"
+      # listen to rooms and dispatch messages to robot.receive
     end
 
     def say(room_id, message)
-      logger.error "#{self.class} hasn't defined \#say"
+      # get the message into the room!
     end
 
     def say_all(message)
-      logger.error "#{self.class} hasn't defined \#say"
+      # say the message into every room the bot is in
     end
 
     class << self
