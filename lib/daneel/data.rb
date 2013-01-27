@@ -18,8 +18,12 @@ module Daneel
       @store[key] = value
     end
 
-    def user(id)
-      self["user.#{id}"]
+    def users
+      @store["users"] ||= {}
+    end
+
+    def rooms
+      @store["rooms"] ||= {}
     end
 
   end
