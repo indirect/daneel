@@ -12,7 +12,7 @@ module Daneel
     end
 
     def inspect
-      %|#<#{self.class} @id=#{@id.inspect} @adapter=#{@adapter.class}|
+      %|#<#{self.class} @id=#{@id.inspect} @adapter=#{@adapter.class}>|
     end
 
   end
