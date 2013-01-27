@@ -13,9 +13,8 @@ module Daneel
     class DepError < LoadError; end
 
     def self.requires_env(*keys)
-      keys.flatten.each do |key|
-        raise DepError, "#{self} requires ENV['#{key}'] to work" unless ENV[key]
-      end
+      missing = keys.flatten.select{|k| ENV[k].nil? || ENV[k].empty? }
+      raise DepError, "#{missing.join(',')} must be set" if missing.any?
     end
 
   end
