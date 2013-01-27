@@ -14,7 +14,7 @@ module Daneel
       # get the message into the room!
     end
 
-    def say_all(message)
+    def announce(message)
       # say the message into every room the bot is in
     end
 
