@@ -1,9 +1,10 @@
 require 'daneel/adapter'
 require 'daneel/script'
+require 'daneel/data'
 
 module Daneel
   class Bot
-    attr_reader :adapter, :full_name, :logger, :name, :scripts
+    attr_reader :adapter, :data, :full_name, :logger, :name, :scripts
     attr_accessor :debug_mode
 
     def initialize(options = {})
@@ -12,12 +13,13 @@ module Daneel
       @full_name = options[:full_name] || options[:name] || "R. Daneel Olivaw"
       @debug_mode = options[:verbose]
 
-      Script.files.each{|file| try_require file }
+      @data = Data.new
+      logger.debug "Data source #{data.class}"
 
+      Script.files.each{|file| try_require file }
       # TODO add script priorities to replicate this
       list = Script.list
       list.push list.delete(Scripts::Chatty)
-
       @scripts = list.map{|s| s.new(self) }
       logger.debug "Booted with scripts: #{@scripts.map(&:class).inspect}"
 
