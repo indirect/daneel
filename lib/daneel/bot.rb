@@ -11,7 +11,7 @@ module Daneel
       @logger = options[:logger] || Daneel::Logger.new
       @name = options[:name] || "daneel"
       @full_name = options[:full_name] || options[:name] || "R. Daneel Olivaw"
-      @debug_mode = options[:verbose]
+      @debug_mode = options[:verbose] && options[:adapter] && options[:adapter] != "shell"
 
       @data = Data.new
       logger.debug "Data source #{data.class}"
