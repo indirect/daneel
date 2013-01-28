@@ -18,6 +18,13 @@ module Daneel
       # say the message into every room the bot is in
     end
 
+    def me
+      @me ||= User.new(0, "R. Daneel Olivaw").tap do |me|
+        me.short_name = "Daneel"
+        me.initials = "DO"
+      end
+    end
+
     class << self
       def named(name)
         require File.join('daneel/adapters', name.downcase)

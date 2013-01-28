@@ -57,6 +57,10 @@ module Daneel
       adapter.leave
     end
 
+    def user
+      @adapter.me
+    end
+
     def inspect
       %|#<#{self.class}:#{object_id} @name="#{name}" @adapter=#{adapter.class}>|
     end
