@@ -3,10 +3,8 @@ require 'daneel/plugin'
 module Daneel
   class Script < Plugin
 
-    def accept?(message)
-      true
-      # TODO default to accepting messages that aren't our own
-      # message.user != robot.user
+    def accepts?(room, message, user)
+      true unless user.id == robot.user.id
     end
 
     def receive(room, message, user)
