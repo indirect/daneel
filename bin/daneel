@@ -5,6 +5,9 @@ trap(:INT) do
   exit 0
 end
 
+# TODO add CLI framework
+# TODO add new command to generate a bot
+
 options = Daneel::Options.parse(ARGV)
 options[:logger] = Daneel::Logger.new(STDOUT, options[:verbose])
 
