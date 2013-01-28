@@ -19,6 +19,7 @@ module Daneel
       Script.files.each{|file| try_require file }
       # TODO add script priorities to replicate this
       list = Script.list
+      list.push list.delete(Scripts::ImageSearch)
       list.push list.delete(Scripts::Chatty)
       @scripts = list.map{|s| s.new(self) }
       logger.debug "Booted with scripts: #{@scripts.map(&:class).inspect}"
