@@ -14,7 +14,12 @@ module Daneel
       def receive(room, message, user)
         case message.command
         when /vine me (.+)$/, /^(?:find) (?:me )?(?:a |another )?(?:vine of )(.*)$/
-          room.say find_vine_url_for($1)
+          url = find_vine_url_for($1)
+          if url
+            room.say url
+          else
+            room.say "Sorry, Twitter didn't have any Vines about that."
+          end
           message.done!
         end
       end
@@ -33,6 +38,7 @@ module Daneel
         logger.debug "GET #{uri}"
         results = JSON.parse(response.body)["results"]
         logger.debug "got back #{results.size} vines"
+        return nil if results.empty?
         # Pull out the Vine display url of a random result
         results.sample["entities"]["urls"].first["expanded_url"]
       rescue => e
