@@ -19,7 +19,7 @@ GIT
 PATH
   remote: .
   specs:
-    daneel (0.0.1)
+    daneel (0.1)
       puma (~> 1.6.3)
       sinatra (~> 1.4.0)
       sparks (~> 0.4)
