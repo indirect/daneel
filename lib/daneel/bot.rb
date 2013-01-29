@@ -29,6 +29,10 @@ module Daneel
     end
 
     def receive(room, message, user)
+      # TODO somehow thread handling messages
+      # some plugins take a very long time to run, and that shouldn't
+      # block processing other messages that have been said afterwards
+
       logger.debug "[room #{room.id}] #{user.name}: #{message.text}"
       message.command = command_from(message.text)
 
