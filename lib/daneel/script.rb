@@ -37,3 +37,91 @@ module Daneel
 
   end
 end
+
+# TODO swap in the implementation below
+#
+# class Daneel::Script
+#   accept :text
+#   sent_to :me
+#   match /.*/
+#
+#   attr_reader :message, :robot, :room, :user
+#
+#   def initialize(robot, room, user, message)
+#     @robot, @room, @user, @message = robot, room, user, message
+#   end
+#
+#   def me
+#     @robot.me
+#   end
+#
+#   def data
+#     @robot.data
+#   end
+#
+#   def reply(*strings)
+#     @robot.reply room, user, *strings.map{|s| user.to_s + [?:,?,].sample + ' ' + s }
+#   end
+#
+#   def say(*strings)
+#     @robot.say room, *strings
+#   end
+#
+#   def handle(args)
+#     # do stuff here! go crazy!
+#   end
+#
+# end
+
+# TODO implement plugins for the new API
+#
+# class ImageSearch < Daneel::Script
+#   # accept :text # default from the superclass
+#   # sent_to :me # default from the superclass
+#   match "image me", "img me",
+#     /find(?: me)? a(?: picture of)? (.+)/,
+#     /find(?: me)? an(?: image of)? (.+)/
+#
+#   def run(search)
+#     say image_url_for(search)
+#   end
+#
+# end
+#
+# class Logger < Daneel::Script
+#   accept :all # not just text
+#   sent_to :anyone # not just the bot
+#
+#   def run
+#     data["messages"] << msg
+#   end
+#
+# end
+#
+# class YouTube < Daneel::Script
+#   match "youtube me", "yt me"
+#
+#   def run(search)
+#     tubes = robot.get_json("http://youtube.com/search",
+#       q: search, alt: 'json', 'max-results': 15, orderBy: 'revelance')
+#     link = tubes["feed"]["entry"].sample["link"].find do |l|
+#       l["rel"] == "alternate" && l["type"] == "text/html"
+#     end
+#     say link
+#   end
+#
+# end
+#
+# class Maps < Daneel::Script
+#   match "map me",
+#     /(?:(satellite|terrain|hybrid)[- ])?map me (.+)/,
+#     /show( me)? a map of (.+)/
+#
+#   def run(args)
+#     args.unshift nil if args.length == 1
+#     args[0] ||= "roadmap"
+#     say map_image(args[0], args[1])
+#     say map_link(args[0], args[1])
+#   end
+# end
+#
