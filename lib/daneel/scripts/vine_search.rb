@@ -14,36 +14,48 @@ module Daneel
       def receive(room, message, user)
         case message.command
         when /vine me (.+)$/, /^(?:find) (?:me )?(?:a |another )?(?:vine of )(.*)$/
-          url = find_vine_url_for($1)
+          url = find_vine($1)
           if url
-            room.say url
+            room.say "#{url}, gif incoming..."
+            room.say gif_for_vine(url)
           else
-            room.say "Sorry, Twitter didn't have any Vines about that."
+            room.say "sorry, couldn't find any matching vine tweets"
           end
           message.done!
         end
+      rescue => e
+        logger.error "#{e.class}: #{e.message}"
+        room.say "internet troubles, maybe try again later?"
       end
 
       def help
         {"find a vine of THING" => "shows you a vine that was tweeted mentioning THING"}
       end
 
-      def find_vine_url_for(search)
+    private
+
+      def find_vine(search)
         logger.debug "Searching for a vine of #{search}"
         uri = URI("http://search.twitter.com/search.json")
         query = CGI.escape("#{search} source:vine_for_ios")
         uri.query = "rpp=5&include_entities=true&q=#{query}"
         request = Net::HTTP::Get.new(uri.request_uri)
-        response = @http.request uri, request
         logger.debug "GET #{uri}"
+        response = @http.request uri, request
         results = JSON.parse(response.body)["results"]
         logger.debug "got back #{results.size} vines"
         return nil if results.empty?
         # Pull out the Vine display url of a random result
         results.sample["entities"]["urls"].first["expanded_url"]
-      rescue => e
-        logger.error "#{e.class}: #{e.message}"
-        room.say "Sorry, something went wrong when I looked for '#{query}'"
+      end
+
+      def gif_for_vine(vine)
+        @http = Net::HTTP::Persistent.new('daneel')
+        gifvine = vine.gsub(/vine.co/, "www.gifvine.co")
+        puts "GET #{gifvine}"
+        response = @http.request URI(gifvine)
+        gif = response.body.match(/<img src\='(.*?)'/) && $1
+        gif + "?format=png" # so Campfire will inline it
       end
 
     end
