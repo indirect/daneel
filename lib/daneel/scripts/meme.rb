@@ -3,6 +3,7 @@ require 'daneel/script'
 module Daneel
   module Scripts
     class Meme < Daneel::Script
+      sent_to :anyone
 
       def receive(room, message, user)
         case message.text

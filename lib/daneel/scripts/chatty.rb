@@ -3,6 +3,7 @@ require 'daneel/script'
 module Daneel
   module Scripts
     class Chatty < Daneel::Script
+      sent_to :anyone
       # TODO make this script the last-priority script
       # priority 20
 

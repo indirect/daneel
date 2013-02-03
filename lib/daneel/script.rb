@@ -4,7 +4,7 @@ module Daneel
   class Script < Plugin
 
     def accepts?(room, message, user)
-      true unless user.id == robot.user.id
+      self.class.accepts?(room, message, user)
     end
 
     def receive(room, message, user)
@@ -31,8 +31,45 @@ module Daneel
         Dir[File.expand_path("../scripts/*.rb", __FILE__)]
       end
 
-      # TODO accept method for script classes
-      # should handle options like :text, :enter, :leave, :topic, :all
+      def accept(*types)
+        if types.empty?
+          @accept || ["text"]
+        else
+          @accept = types.map{|t| t.to_s }
+        end
+      end
+
+      def sent_to(whom = nil)
+        if whom.nil?
+          @sent_to || :me
+        else
+          @sent_to = whom
+        end
+      end
+
+      def match(*patterns)
+        if patterns.empty?
+          @match || [/.*/]
+        else
+          @match = patterns
+        end
+      end
+
+      def accepts?(room, message, user)
+        accept_type = accept.include? message.type
+
+        case sent_to
+        when :me
+          accept_sent_to = !message.command.nil?
+        when :anyone
+          accept_sent_to = true
+        end
+
+        accept_match = match.find{|p| p.match(message.text) }
+
+        accept_type && accept_sent_to && accept_match
+      end
+
     end
 
   end
