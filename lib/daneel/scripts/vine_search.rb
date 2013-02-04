@@ -24,6 +24,7 @@ module Daneel
           message.done!
         end
       rescue => e
+        message.done!
         logger.error "#{e.class}: #{e.message}"
         room.say "internet troubles, maybe try again later?"
       end
