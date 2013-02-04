@@ -51,8 +51,16 @@ module Daneel
 
       def gif_for_vine(vine)
         gifvine = vine.gsub(/vine.co/, "www.gifvine.co")
+
+        # Try to get the gif URL from the HTML, first
         response = robot.request URI(gifvine)
         gif = response.body.scan(/<img src\='(.*?)'/) && $1
+        return gif unless gif.nil? || gif.empty?
+
+        # Otherwise, we have to replicate the new AJAX workflow
+        robot.request URI(gifvine + "/ajax/fetch") # downloads the vine video
+        response = robot.request URI(gifvine + "/ajax/convert") # does the gif-ification
+        JSON.parse(response.body)["gif_url"]
       end
 
     end
