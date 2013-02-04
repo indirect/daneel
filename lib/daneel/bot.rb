@@ -26,6 +26,8 @@ module Daneel
 
       @adapter = Adapter.named(options[:adapter] || "shell").new(self)
       logger.debug "Using the #{adapter.class} adapter"
+
+      @http = Net::HTTP::Persistent.new('daneel')
     end
 
     def receive(room, message, user)
@@ -67,6 +69,11 @@ module Daneel
 
     def user
       @adapter.me
+    end
+
+    def request(uri, req = nil)
+      logger.debug "GET #{uri}"
+      @http.request uri, req
     end
 
     def inspect

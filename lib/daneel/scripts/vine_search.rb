@@ -6,18 +6,18 @@ module Daneel
   module Scripts
     class VineSearch < Daneel::Script
 
-      def initialize(robot)
-        super
-        @http = Net::HTTP::Persistent.new('daneel')
-      end
-
       def receive(room, message, user)
         case message.command
         when /vine me (.+)$/, /^(?:find) (?:me )?(?:a |another )?(?:vine of )(.*)$/
           url = find_vine($1)
           if url
             room.say "#{url}, gif incoming..."
-            room.say gif_for_vine(url)
+            gif = gif_for_vine(url)
+            if gif
+              room.say gif + "?png" # so Campfire will inline it
+            else
+              room.say "gifvine didn't work, sorry"
+            end
           else
             room.say "sorry, couldn't find any matching vine tweets"
           end
@@ -40,8 +40,7 @@ module Daneel
         query = CGI.escape("#{search} source:vine_for_ios")
         uri.query = "rpp=5&include_entities=true&q=#{query}"
         request = Net::HTTP::Get.new(uri.request_uri)
-        logger.debug "GET #{uri}"
-        response = @http.request uri, request
+        response = robot.request uri, request
         results = JSON.parse(response.body)["results"]
         logger.debug "got back #{results.size} vines"
         return nil if results.empty?
@@ -50,12 +49,9 @@ module Daneel
       end
 
       def gif_for_vine(vine)
-        @http = Net::HTTP::Persistent.new('daneel')
         gifvine = vine.gsub(/vine.co/, "www.gifvine.co")
-        puts "GET #{gifvine}"
-        response = @http.request URI(gifvine)
-        gif = response.body.match(/<img src\='(.*?)'/) && $1
-        gif + "?format=png" # so Campfire will inline it
+        response = robot.request URI(gifvine)
+        gif = response.body.scan(/<img src\='(.*?)'/) && $1
       end
 
     end
