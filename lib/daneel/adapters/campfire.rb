@@ -56,6 +56,7 @@ module Daneel
       def me
         @me ||= begin
           data = @fire.me
+          data["name"].gsub!(/r\. /i, '') # a robot prefix isn't a name
           me = User.new(data["id"], data["name"], data)
           robot.data.users[me.id] = me
         end
