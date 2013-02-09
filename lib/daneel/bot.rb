@@ -4,7 +4,7 @@ require 'daneel/data'
 
 module Daneel
   class Bot
-    attr_reader :adapter, :data, :full_name, :logger, :name, :scripts
+    attr_reader :adapter, :data, :logger, :scripts
     attr_accessor :debug_mode
 
     def initialize(options = {})
@@ -80,11 +80,15 @@ module Daneel
 
   private
 
+    def command_name
+      @command_name ||= "(?:#{user.initials}|#{user.name}|#{user.short_name})"
+    end
+
     def command_from(text)
       return if text.nil? || text.empty?
-      m = text.match(/^@#{name}\s+(.*)/i)
-      m ||= text.match(/^#{name}(?:[,:]\s*|\s+)(.*)/i)
-      m ||= text.match(/^\s*(.*?)(?:,\s*)?\b#{name}[.!?\s]*$/i)
+      m = text.match(/^@#{command_name}\s+(.*)/i)
+      m ||= text.match(/^#{command_name}(?:[,:]\s*|\s+)(.*)/i)
+      m ||= text.match(/^\s*(.*?)(?:,\s*)?\b#{command_name}[.!?\s]*$/i)
       m && m[1]
     end
 
