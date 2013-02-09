@@ -9,8 +9,6 @@ module Daneel
 
     def initialize(options = {})
       @logger = options[:logger] || Daneel::Logger.new
-      @name = options[:name] || "daneel"
-      @full_name = options[:full_name] || options[:name] || "R. Daneel Olivaw"
       @debug_mode = options[:verbose] && options[:adapter] && options[:adapter] != "shell"
 
       @data = Data.new
@@ -77,7 +75,7 @@ module Daneel
     end
 
     def inspect
-      %|#<#{self.class}:#{object_id} @name="#{name}" @adapter=#{adapter.class}>|
+      %|#<#{self.class}:#{object_id} @adapter=#{adapter.class}>|
     end
 
   private
