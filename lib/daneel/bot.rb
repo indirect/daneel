@@ -81,7 +81,7 @@ module Daneel
   private
 
     def command_name
-      @command_name ||= "(?:#{user.initials}|#{user.name}|#{user.short_name})"
+      @command_name ||= "(?:#{user.name}|#{user.short_name})"
     end
 
     def command_from(text)
