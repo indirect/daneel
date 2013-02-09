@@ -14,7 +14,7 @@ module Daneel
             room.say "#{url}, gif incoming..."
             gif = gif_for_vine(url)
             if gif
-              room.say gif + "?png" # so Campfire will inline it
+              room.say gif + "?.png" # so Campfire will inline it
             else
               room.say "gifvine didn't work, sorry"
             end
