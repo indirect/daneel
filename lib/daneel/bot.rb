@@ -71,7 +71,9 @@ module Daneel
 
     def request(uri, req = nil)
       logger.debug "GET #{uri}"
-      @http.request uri, req
+      @http.request(uri, req).tap do |response|
+        logger.debug response.inspect
+      end
     end
 
     def inspect
