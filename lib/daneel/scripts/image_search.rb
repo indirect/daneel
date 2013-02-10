@@ -37,8 +37,7 @@ module Daneel
         uri.query = "Sources=%27image%27&Adult=%27Moderate%27&$format=JSON&Query=#{query}"
         request = Net::HTTP::Get.new(uri.request_uri)
         request.basic_auth 'x', @token
-        response = @http.request uri, request
-        logger.debug "GET #{uri}"
+        response = robot.request uri, request
         results = JSON.parse(response.body)["d"]["results"].first["Image"]
         logger.debug "got back #{results.size} images"
         # Random image from the first 50 results
