@@ -21,6 +21,9 @@ module Daneel
           room.say find_image_url_for($1)
           message.done!
         end
+      rescue => e
+        logger.error "#{e.class}: #{e.message}"
+        room.say "Sorry, something went wrong when I looked for '#{query}'"
       end
 
       def help
@@ -40,9 +43,6 @@ module Daneel
         logger.debug "got back #{results.size} images"
         # Random image from the first 50 results
         results.sample["MediaUrl"]
-      rescue => e
-        logger.error "#{e.class}: #{e.message}"
-        room.say "Sorry, something went wrong when I looked for '#{query}'"
       end
 
     end
