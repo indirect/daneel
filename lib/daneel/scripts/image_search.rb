@@ -23,7 +23,7 @@ module Daneel
         end
       rescue => e
         logger.error "#{e.class}: #{e.message}"
-        room.say "Sorry, something went wrong when I looked for '#{query}'"
+        room.say "Sorry, something went wrong when I looked for that :("
       end
 
       def help
