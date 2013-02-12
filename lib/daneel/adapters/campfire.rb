@@ -17,8 +17,8 @@ module Daneel
           room = Room.new(id, self, @fire.room(id))
           robot.data.rooms[id] = room
           # Save the user info for all the users in the room
-          room.data["users"].each do |data|
-            user = User.new(data["id"], data["name"], data)
+          room.data[:users].each do |data|
+            user = User.new(data[:id], data[:name], data)
             robot.data.users[user.id] = user
           end
         end
@@ -56,8 +56,8 @@ module Daneel
       def me
         @me ||= begin
           data = @fire.me
-          data["name"].gsub!(/r\. /i, '') # a robot prefix isn't a name
-          me = User.new(data["id"], data["name"], data)
+          data[:name].gsub!(/r\. /i, '') # a robot prefix isn't a name
+          me = User.new(data[:id], data[:name], data)
           robot.data.users[me.id] = me
         end
       end
@@ -67,24 +67,24 @@ module Daneel
       def find_user(id)
         robot.data.users[id] ||= begin
           data = @fire.user(id)
-          User.new(data["id"], data["name"], data)
+          User.new(data[:id], data[:name], data)
         end
       end
 
       def watch_room(room)
         @fire.watch(room.id) do |data|
-          next if data["type"] == "TimestampMessage"
+          next if data[:type] == "TimestampMessage"
 
           # TODO pass through self-messages, once they are filtered by
           # the accept? method on scripts
-          next if data["user_id"] == me.id
+          next if data[:user_id] == me.id
 
-          text = data["body"]
-          time = Time.parse(data["created_at"]) rescue Time.now
-          type = data["type"].gsub(/Message$/, '').downcase
+          text = data[:body]
+          time = Time.parse(data[:created_at]) rescue Time.now
+          type = data[:type].gsub(/Message$/, '').downcase
           mesg = Message.new(text, time, type)
-          room = robot.data.rooms[data["room_id"]]
-          user = find_user(data["user_id"])
+          room = robot.data.rooms[data[:room_id]]
+          user = find_user(data[:user_id])
           robot.receive room, mesg, user
         end
       end
