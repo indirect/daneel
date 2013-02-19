@@ -14,9 +14,9 @@ module Daneel
       @data = Data.new
       logger.debug "Data source #{data.class}"
 
-      Script.files.each{|file| try_require file }
+      Daneel.script_files.each{|file| try_require file }
       # TODO add script priorities to replicate this
-      list = Script.list
+      list = Daneel.script_list
       list.push list.delete(Scripts::ImageSearch)
       list.push list.delete(Scripts::Chatty)
       @scripts = list.map{|s| s.new(self) }

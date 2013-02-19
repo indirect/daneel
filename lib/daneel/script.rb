@@ -16,20 +16,7 @@ module Daneel
       {}
     end
 
-    # Track scripts that have loaded so we can use them
     class << self
-
-      def list
-        @list ||= []
-      end
-
-      def inherited(subclass)
-        list << subclass
-      end
-
-      def files
-        Dir[File.expand_path("../scripts/*.rb", __FILE__)]
-      end
 
       def accept(*types)
         if types.empty?
