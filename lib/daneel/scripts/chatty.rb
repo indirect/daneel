@@ -7,48 +7,71 @@ module Daneel
       # TODO make this script the last-priority script
       # priority 20
 
-      def receive(room, message, user)
+      def run
         # Said to the room in general
-        case message.text
-        when /^(night|good ?night)(,?\s(all|every(body|one)))$/i
-          room.say "goodnight, #{user}"
-        when /^(morning|good ?morning)(,?\s(all|every(body|one)))$/i
-          room.say "good morning, #{user}"
+        listen(/^(night|good ?night)(,?\s(all|every(body|one)))$/i) do
+          say "goodnight, #{user}"
+        end
+
+        listen(/^(morning|good ?morning)(,?\s(all|every(body|one)))$/i) do
+          say "good morning, #{user}"
+        end
+
+        listen(/coffee time/i) do
+          say [
+            "It is by caffeine alone I set my mind in motion",
+            "It is by the beans of Java that thoughts acquire speed",
+            "The hands acquire shakes, the shakes become a warning",
+            "It is by caffeine alone I set my mind in motion"
+          ].sample
         end
 
         # Said directly to the bot
-        case message.command
-        when nil
-          # don't reply to things not addressed to the bot
-        when /^\s*$/
+        respond(/^\s*([?!.])$/) do |it|
           # question questioners, exclaim at exclaimers, dot dotters
-          message.text.match(/([?!.])$/)
-          room.say "#{user}#{$1}"
-        when /^(hey|hi|hello|sup|howdy)/i
-          room.say "#{$1} #{user}"
-        when /how are (you|things)|how\'s it (going|hanging)/i
-          room.say [
+          say "#{user}#{it}"
+        end
+
+        respond(/^(hey|hi|hello|sup|howdy)/i) do |hi|
+          say "#{hi} #{user}"
+        end
+
+        respond(/(^later|(?:good\s*)?bye)/i) do |bye|
+          say("#{bye} #{user}")
+        end
+
+        respond(/how are (you|things)|how\'s it (going|hanging)/i) do
+          say [
             "Oh, you know, the usual.",
             "can't complain",
             "alright, how about you?",
             "people say things, I say things back"
           ].sample
-        when /(^later|(?:good\s*)?bye)/i
-          room.say("#{$1} #{user}")
-        when /you rock|awesome|cool|nice/i
-          room.say [
+        end
+
+        respond(/you rock|awesome|cool|nice/i) do
+          say [
             "Thanks, #{user}, you're pretty cool yourself.",
             "I try.",
             "Aw, shucks. Thanks, #{user}."
           ].sample
-        when /(^|you|still)\s*there/i, /\byt\b/i
-          room.say %w{Yup y}.sample
-        when /wake up|you awake/i
-          room.say("yo")
-        when /thanks|thank you/i
-          room.say ["No problem.", "np", "any time", "that's what I'm here for", "You're welcome."].sample
-        when /^(good\s?night|(?:g')?night)$/i
-          room.say [
+        end
+
+        respond(/(^|you|still)\s*there/i, /\byt\b/i) do
+          say %w{Yup y}.sample
+        end
+
+        respond(/wake up|you awake/i) do
+          say("yo")
+        end
+
+        respond(/thanks|thank you/i) do
+          say ["No problem.", "np", "any time",
+            "that's what I'm here for", "You're welcome."].sample
+        end
+
+        respond(/^(good\s?night|(?:g')?night)$/i) do
+          say [
             "see you later, #{user}",
             "later, #{user}",
             "night",
@@ -56,33 +79,34 @@ module Daneel
             "bye",
             "have a good night"
           ].sample
-        when /^(see you(?: later)?)$/i
-          room.say [
+        end
+
+        respond(/^(see you(?: later)?)$/i) do
+          say [
             "see you later, #{user}",
             "later, #{user}",
             "bye",
             "later",
             "see ya",
           ].sample
-        when /^(?:(?:get|grab|fetch|bring) (.*?)|i need|time for)(?: (?:a|some))? coffee$/i
-          person = $1
+        end
+
+        respond(/^(?:(?:get|grab|fetch|bring) (.*?)|i need|time for)(?: (?:a|some))? coffee$/i) do |person|
           if person =~ /i|me|us/
             person, do_they = "you", "do you"
           else
             do_they = "does #{person}"
           end
 
-          room.say [
+          say [
             "would #{person} like cream or sugar?",
             "how #{do_they} take it?",
             "coming right up",
-            "It is by caffeine alone I set my mind in motion",
-            "It is by the beans of Java that thoughts acquire speed",
-            "The hands acquire shakes, the shakes become a warning",
-            "It is by caffeine alone I set my mind in motion"
           ].sample
-        else
-          room.say [
+        end
+
+        respond do
+          say [
             "I have no idea what you're talking about, #{user}.",
             "eh?",
             "oh, interesting",
@@ -100,6 +124,7 @@ module Daneel
             "How do you feel when someone says '#{message.command}' to you, #{user}?"
           ].sample
         end
+
       end
 
     end
