@@ -1,6 +1,7 @@
 require 'daneel/adapter'
 require 'daneel/script'
 require 'daneel/data'
+require 'net/http/persistent'
 
 module Daneel
   class Bot
