@@ -91,7 +91,7 @@ module Daneel
       return if text.nil? || text.empty?
       m = text.match(/^@#{command_name}\s+(.*)/i)
       m ||= text.match(/^#{command_name}(?:[,:]\s*|\s+)(.*)/i)
-      m ||= text.match(/^\s*(.*?)(?:,\s*)?\b#{command_name}[.!?\s]*$/i)
+      m ||= text.match(/^\s*(.*?)(?:,?\s*)?\b#{command_name}[.!?\s]*$/i)
       m && m[1]
     end
 
