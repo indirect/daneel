@@ -27,7 +27,7 @@ module Daneel
       def run
         @threads ||= []
         robot.data.rooms.each do |id, room|
-          t = Thread.new { watch_room(room) } until t
+          t = Thread.new { watch_room(room) }
           t.abort_on_exception = true
           @threads << t
         end
