@@ -29,7 +29,7 @@ module Daneel
       @http = Net::HTTP::Persistent.new('daneel')
     end
 
-    def receive(room, message, user)
+    def receive(room, user, message)
       # TODO somehow thread handling messages
       # some plugins take a very long time to run, and that shouldn't
       # block processing other messages that have been said afterwards
@@ -38,7 +38,8 @@ module Daneel
       message.command = command_from(message.text)
 
       scripts.each do |script|
-        script.receive(room, message, user)
+        next unless script.accepts?(room, user, message)
+        script.new(self, room, user, message).run
         break if message.done
       end
       message

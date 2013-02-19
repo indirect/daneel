@@ -73,19 +73,14 @@ module Daneel
 
       def watch_room(room)
         @fire.watch(room.id) do |data|
+          # We really just don't care about timestamps
           next if data[:type] == "TimestampMessage"
 
-          # TODO pass through self-messages, once they are filtered by
-          # the accept? method on scripts
-          next if data[:user_id] == me.id
-
-          text = data[:body]
-          time = Time.parse(data[:created_at]) rescue Time.now
-          type = data[:type].gsub(/Message$/, '').downcase
-          mesg = Message.new(text, time, type)
           room = robot.data.rooms[data[:room_id]]
           user = find_user(data[:user_id])
-          robot.receive room, mesg, user
+          time = Time.parse(data[:created_at]) rescue Time.now
+          type = data[:type].gsub(/Message$/, '').downcase
+          robot.receive room, user, Message.new(data[:body], time, type)
         end
       end
 
