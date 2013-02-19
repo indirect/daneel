@@ -16,11 +16,10 @@ module Daneel
       logger.debug "Data source #{data.class}"
 
       Daneel.script_files.each{|file| try_require file }
+      @scripts = Daneel.script_list
       # TODO add script priorities to replicate this
-      list = Daneel.script_list
-      list.push list.delete(Scripts::ImageSearch)
-      list.push list.delete(Scripts::Chatty)
-      @scripts = list.map{|s| s.new(self) }
+      # @scripts.push @scripts.delete(Scripts::ImageSearch)
+      # @scripts.push @scripts.delete(Scripts::Chatty)
       logger.debug "Booted with scripts: #{@scripts.map(&:class).inspect}"
 
       @adapter = Adapter.named(options[:adapter] || "shell").new(self)
