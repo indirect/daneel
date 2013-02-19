@@ -32,7 +32,7 @@ module Daneel
           say "#{user}#{it}"
         end
 
-        respond(/^(hey|hi|hello|sup|howdy)/i) do |hi|
+        respond(/^(hey|hi|hello|howdy)/i) do |hi|
           say "#{hi} #{user}"
         end
 
@@ -40,7 +40,8 @@ module Daneel
           say("#{bye} #{user}")
         end
 
-        respond(/how are (you|things)|how\'s it (going|hanging)/i) do
+        respond(/how are (you|things)/i, /how\'s it (going|hanging)/i,
+            /what'?s up\??|sup/i) do
           say [
             "Oh, you know, the usual.",
             "can't complain",
