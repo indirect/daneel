@@ -68,15 +68,16 @@ module Daneel
 
     def self.accepts?(room, user, message)
       types = accept[:type] || ["text"]
-      accept_type = types.include?(message.type)
+      return false unless types.include?(message.type)
 
       sent_to = accept[:sent_to] || :me
-      accept_sent_to = sent_to == :anyone || (sent_to == :me && message.command)
+      for_me = sent_to == :me && message.command
+      return false unless sent_to == :anyone || for_me
 
       match = accept[:match] || [/.*/]
-      accept_match = match.find{|p| p.match(message.text) }
+      return false unless match.find{|p| p.match(message.text) }
 
-      accept_type && accept_sent_to && accept_match
+      true
     end
 
     def self.accept
