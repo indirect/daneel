@@ -70,6 +70,15 @@ module Daneel
       @adapter.me
     end
 
+    def say(room, *strings)
+      @adapter.say room.id, *strings
+    end
+
+    def reply(room, user, *strings)
+      strings[0] = user.to_s + [?:,?,].sample + ' ' + strings.first
+      say room, *strings
+    end
+
     def request(uri, req = nil)
       logger.debug "GET #{uri}"
       @http.request(uri, req).tap do |response|
