@@ -38,7 +38,6 @@ module Daneel
       message.command = command_from(message.text)
 
       scripts.each do |script|
-        next unless script.accepts?(room, message, user)
         script.receive(room, message, user)
         break if message.done
       end
