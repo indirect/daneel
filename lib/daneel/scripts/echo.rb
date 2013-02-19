@@ -4,11 +4,9 @@ module Daneel
   module Scripts
     class Echo < Daneel::Script
 
-      def receive(room, message, user)
-        case message.command
-        when /^(?:echo|say)\s(.+)/
-          room.say $1
-          message.done!
+      def run
+        respond(/^(?:echo|say)\s(.+)/) do |words|
+          say words
         end
       end
 

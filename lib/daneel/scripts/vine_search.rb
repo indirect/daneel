@@ -6,27 +6,26 @@ module Daneel
   module Scripts
     class VineSearch < Daneel::Script
 
-      def receive(room, message, user)
-        case message.command
-        when /vine me (.+)$/, /^(?:find) (?:me )?(?:a |another )?(?:vine of )(.*)$/
+      def run
+        respond(/^(?:find) (?:me )?(?:a |another )?(?:vine of )(.*)$/,
+            /vine me (.+)$/) do
           url = find_vine($1)
           if url
-            room.say "#{url}, gif incoming..."
+            say "#{url}, gif incoming..."
             gif = gif_for_vine(url)
             if gif
-              room.say gif + "?.png" # so Campfire will inline it
+              say gif + "?.png" # so Campfire will inline it
             else
-              room.say "gifvine didn't work, sorry"
+              say "gifvine didn't work, sorry"
             end
           else
-            room.say "sorry, couldn't find any matching vine tweets"
+            say "sorry, couldn't find any matching vine tweets"
           end
-          message.done!
         end
       rescue => e
         message.done!
         logger.error "#{e.class}: #{e.message}"
-        room.say "internet troubles, maybe try again later?"
+        say "internet troubles, maybe try again later?"
       end
 
       def help

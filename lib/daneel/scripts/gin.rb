@@ -6,11 +6,9 @@
 # from a Google image search.
 class Gin < Daneel::Script
 
-  def receive(room, message, user)
-    case message.command
-    when /gin me/i
-      room.say a_gin
-      message.done!
+  def run
+    respond(/gin me/i) do
+      say a_gin
     end
   end
 
@@ -27,4 +25,5 @@ class Gin < Daneel::Script
       "http://ipreferboozehound.files.wordpress.com/2010/07/img_03131.jpg"
     ].sample
   end
+
 end
