@@ -10,6 +10,8 @@ module Daneel
 
     def run
       # do stuff here!
+      # respond(/hi/){ say "hello there" }
+      # listen(/trololol/){ say ":trollface:" }
     end
 
     def usage
@@ -84,14 +86,23 @@ module Daneel
       @accept ||= {}
     end
 
+    # @param *types A list of message types this script can process, with a
+    # default value of "text" if no other value is set.
     def self.handles(*types)
-      accept[:types] = types.map{|t| t.to_s } unless types.empty?
+      accept[:types] = types.map(&:to_s) unless types.empty?
     end
 
+    # @param whom Set to :anyone to process all messages that are seen by the
+    # bot. Defaults to :me, which means only messages addressed to the bot by
+    # name will be processed.
     def self.sent_to(whom)
-      accept[:sent_to] = whom
+      accept[:sent_to] = whom.to_sym
     end
 
+    # @param *patterns An optional list of regular expressions that messages
+    # will be checked against before the #run method is called. If the script
+    # has different behaviour depending on which regex matches, use the block
+    # methods #listen and #respond inside of #run instead of this method.
     def self.match(*patterns)
       accept[:match] = patterns unless patterns.empty?
     end
