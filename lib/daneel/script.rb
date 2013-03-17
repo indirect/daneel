@@ -70,7 +70,7 @@ module Daneel
 
     def self.accepts?(room, user, message)
       types = accept[:type] || ["text"]
-      return false unless types.include?(message.type)
+      return false unless types.include?(message.type.to_s)
 
       sent_to = accept[:sent_to] || :me
       for_me = sent_to == :me && message.command
