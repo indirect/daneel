@@ -15,23 +15,24 @@ module Daneel
       @location = location
     end
 
-    def load_all
-      files = Dir[File.join(@location, "*.rb")]
-      files.each { |f| safe_require(f) }
-      @loaded = Daneel.loaded_scripts
-    end
-
     def safe_require(path)
       require path
     rescue Script::DepError => e
       logger.warn "Couldn't load #{File.basename(name)}: #{e.message}"
     end
 
+    def loaded
+      @loaded ||= begin
+        files = Dir[File.join(@location, "*.rb")]
+        files.each { |f| safe_require(f) }
+        Daneel.loaded_scripts.sort_by(&:priority)
+      end
+    end
+
     include Enumerable
 
     def each(*args)
-      load_all unless @loaded
-      Daneel.loaded_scripts.each(*args) { |*bargs| yield *bargs }
+      loaded.each(*args) { |*a| yield *a }
     end
 
   end
