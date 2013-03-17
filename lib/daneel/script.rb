@@ -30,6 +30,7 @@ module Daneel
 
     def process(*patterns, string)
       return if message.done || string.nil?
+      return yield if patterns.empty?
       match = nil
       if patterns.find { |p| match = string.match(p) }
         yield *match.captures
