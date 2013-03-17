@@ -29,10 +29,11 @@ module Daneel
   private
 
     def process(*patterns, string)
-      return if message.done
-      if string && patterns.any?{|p| string.match(p) }
+      return if message.done || string.nil?
+      match = nil
+      if patterns.find { |p| match = string.match(p) }
+        yield *match.captures
         message.done!
-        yield *Regexp.last_match.captures
       end
     end
 
