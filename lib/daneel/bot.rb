@@ -15,11 +15,7 @@ module Daneel
       @data = Data.new
       logger.debug "Data source #{data.class}"
 
-      Daneel.script_files.each{|file| try_require file }
-      @scripts = Daneel.script_list
-      # TODO add script priorities to replicate this
-      # @scripts.push @scripts.delete(Scripts::ImageSearch)
-      # @scripts.push @scripts.delete(Scripts::Chatty)
+      @scripts = ScriptList.new(File.expand_path("../scripts", __FILE__))
       logger.debug "Booted with scripts: #{@scripts.map(&:class).inspect}"
 
       @adapter = Adapter.named(options[:adapter] || "shell").new(self)
@@ -101,12 +97,6 @@ module Daneel
       m ||= text.match(/^#{command_name}(?:[,:]\s*|\s+)(.*)/i)
       m ||= text.match(/^\s*(.*?)(?:,?\s*)?\b#{command_name}[.!?\s]*$/i)
       m && m[1]
-    end
-
-    def try_require(name)
-      require name
-    rescue Script::DepError => e
-      logger.warn "Couldn't load #{File.basename(name)}: #{e.message}"
     end
 
   end

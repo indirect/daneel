@@ -66,7 +66,7 @@ module Daneel
 
     # Track scripts that have loaded so we can use them
     def self.inherited(subclass)
-      Daneel.script_list << subclass
+      Daneel.loaded_scripts << subclass
     end
 
     def self.accepts?(room, user, message)
