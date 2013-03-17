@@ -7,7 +7,7 @@
 class Gin < Daneel::Script
 
   def run
-    respond(/gin me/i) do
+    listen(/gin me$/i) do
       say a_gin
     end
   end
