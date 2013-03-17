@@ -1,6 +1,6 @@
 /*.gem
 /.bundle/
-/.env
+/.env*
 /.yardoc/
 /coverage/
 /doc/
