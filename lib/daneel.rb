@@ -11,4 +11,5 @@ module Daneel
   def self.script_files
     Dir[File.expand_path("../daneel/scripts/chatty*.rb", __FILE__)]
   end
+
 end

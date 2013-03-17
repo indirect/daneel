@@ -37,11 +37,11 @@ module Daneel
     end
 
     def listen(*patterns)
-      process(*patterns, message.text){|*args| yield *args }
+      process(*patterns, message.text) { |*args| yield *args }
     end
 
     def respond(*patterns)
-      process(*patterns, message.command){|*args| yield *args }
+      process(*patterns, message.command) { |*args| yield *args }
     end
 
     def me
