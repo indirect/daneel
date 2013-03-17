@@ -33,7 +33,7 @@ module Daneel
       message.command = command_from(message.text)
 
       scripts.each do |script|
-        next unless script.accepts?(room, user, message)
+        next unless script.handles?(room, user, message)
         script.new(self, room, user, message).run
         break if message.done
       end

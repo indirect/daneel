@@ -69,43 +69,19 @@ module Daneel
       Daneel.loaded_scripts << subclass
     end
 
-    def self.accepts?(room, user, message)
-      types = accept[:type] || ["text"]
-      return false unless types.include?(message.type.to_s)
-
-      sent_to = accept[:sent_to] || :me
-      for_me = sent_to == :me && message.command
-      return false unless sent_to == :anyone || for_me
-
-      match = accept[:match] || [/.*/]
-      return false unless match.find{|p| p.match(message.text) }
-
-      true
+    # @param room the room the message was said into
+    # @param user the user that said the message
+    # @param message the message that is being checked
+    # @returns [Boolean] Whether this script can handle the message
+    def self.handles?(room, user, message)
+      types = @handles_types || ["text"]
+      types.include?(message.type.to_s)
     end
 
-    def self.accept
-      @accept ||= {}
-    end
-
-    # @param *types A list of message types this script can process, with a
-    # default value of "text" if no other value is set.
+    # @param *types A list of message types this script can process. If no
+    # value is set, the script will only handle the message type "text".
     def self.handles(*types)
-      accept[:types] = types.map(&:to_s) unless types.empty?
-    end
-
-    # @param whom Set to :anyone to process all messages that are seen by the
-    # bot. Defaults to :me, which means only messages addressed to the bot by
-    # name will be processed.
-    def self.sent_to(whom)
-      accept[:sent_to] = whom.to_sym
-    end
-
-    # @param *patterns An optional list of regular expressions that messages
-    # will be checked against before the #run method is called. If the script
-    # has different behaviour depending on which regex matches, use the block
-    # methods #listen and #respond inside of #run instead of this method.
-    def self.match(*patterns)
-      accept[:match] = patterns unless patterns.empty?
+      @handles_types = types.map(&:to_s) unless types.empty?
     end
 
   end
