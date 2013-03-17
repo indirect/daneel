@@ -3,8 +3,7 @@ require 'daneel/script'
 module Daneel
   module Scripts
     class Chatty < Daneel::Script
-      # TODO make this script the last-priority script
-      # priority 20
+      priority 20
 
       def run
         # Said to the room in general

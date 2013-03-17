@@ -63,7 +63,6 @@ module Daneel
 
     # Class methods
 
-
     # Track scripts that have loaded so we can use them
     def self.inherited(subclass)
       Daneel.loaded_scripts << subclass
@@ -82,6 +81,11 @@ module Daneel
     # value is set, the script will only handle the message type "text".
     def self.handles(*types)
       @handles_types = types.map(&:to_s) unless types.empty?
+    end
+
+    # Priority that this script will run at. Lower numbers run first.
+    def self.priority(value = nil)
+      value ? @priority = value : (@priority || 0)
     end
 
   end
