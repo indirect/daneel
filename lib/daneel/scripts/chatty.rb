@@ -15,13 +15,8 @@ module Daneel
           say "good morning, #{user}"
         end
 
-        listen(/coffee time/i) do
-          say [
-            "It is by caffeine alone I set my mind in motion",
-            "It is by the beans of Java that thoughts acquire speed",
-            "The hands acquire shakes, the shakes become a warning",
-            "It is by caffeine alone I set my mind in motion"
-          ].sample
+        listen(/^coffee$|coffee time/i) do
+          say litany_against_decaffination
         end
 
         # Said directly to the bot
@@ -90,6 +85,10 @@ module Daneel
           ].sample
         end
 
+        respond(/coffee/) do
+          say litany_against_decaffination
+        end
+
         respond(/^(?:(?:get|grab|fetch|bring) (.*?)|i need|time for)(?: (?:a|some))? coffee$/i) do |person|
           if person =~ /i|me|us/
             person, do_they = "you", "do you"
@@ -124,6 +123,15 @@ module Daneel
           ].sample
         end
 
+      end
+
+      def litany_against_decaffination
+        [
+          "It is by caffeine alone I set my mind in motion",
+          "It is by the beans of Java that thoughts acquire speed",
+          "The hands acquire shakes, the shakes become a warning",
+          "It is by caffeine alone I set my mind in motion"
+        ].sample
       end
 
     end
