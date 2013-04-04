@@ -19,7 +19,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
 
   gem.add_dependency "sparks", "~> 0.4"
-  gem.add_dependency "sinatra", "~> 1.4.0"
+  gem.add_dependency "sinatra", "~> 1.4.2"
   gem.add_dependency "puma", "~> 1.6.3"
 
   gem.add_development_dependency "rake", "~> 10.0"

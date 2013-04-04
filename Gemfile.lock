@@ -1,27 +1,9 @@
-GIT
-  remote: git://github.com/indirect/sparks.git
-  revision: 6c90859c3652e8f426e2116992ce271a8d40e9a2
-  branch: master
-  specs:
-    sparks (0.4)
-      net-http-persistent (~> 2.8)
-      yajl-ruby (~> 1.1)
-
-GIT
-  remote: git://github.com/sinatra/sinatra.git
-  revision: 9984d0d2b3f1ea12273c6c25f8e102b2329f33e9
-  specs:
-    sinatra (1.4.0)
-      rack (~> 1.4)
-      rack-protection (~> 1.3)
-      tilt (~> 1.3, >= 1.3.3)
-
 PATH
   remote: .
   specs:
     daneel (0.1)
       puma (~> 1.6.3)
-      sinatra (~> 1.4.0)
+      sinatra (~> 1.4.2)
       sparks (~> 0.4)
 
 GEM
@@ -47,12 +29,19 @@ GEM
       pry (~> 0.9.10)
     puma (1.6.3)
       rack (~> 1.2)
-    rack (1.4.4)
-    rack-protection (1.3.2)
+    rack (1.5.2)
+    rack-protection (1.5.0)
       rack
     rake (10.0.3)
+    sinatra (1.4.2)
+      rack (~> 1.5, >= 1.5.2)
+      rack-protection (~> 1.4)
+      tilt (~> 1.3, >= 1.3.4)
     slop (3.4.3)
-    tilt (1.3.3)
+    sparks (0.4)
+      net-http-persistent (~> 2.8)
+      yajl-ruby (~> 1.1)
+    tilt (1.3.6)
     yajl-ruby (1.1.0)
 
 PLATFORMS
@@ -63,5 +52,3 @@ DEPENDENCIES
   daneel!
   pry-debugger
   rake (~> 10.0)
-  sinatra!
-  sparks!
