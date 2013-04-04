@@ -12,6 +12,9 @@ end
 options = Daneel::Options.parse(ARGV)
 options[:logger] = Daneel::Logger.new(STDOUT, options[:verbose])
 
+scripts_dir = File.expand_path("../../lib/daneel/scripts", __FILE__)
+Daneel::ScriptList.load_from(scripts_dir)
+
 if options.has_key?(:server)
   require 'daneel/server'
   sopts = options.delete(:server)

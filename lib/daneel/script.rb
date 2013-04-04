@@ -66,7 +66,7 @@ module Daneel
 
     # Track scripts that have loaded so we can use them
     def self.inherited(subclass)
-      Daneel.loaded_scripts << subclass
+      Daneel::ScriptList.loaded_scripts << subclass
     end
 
     # @param room the room the message was said into

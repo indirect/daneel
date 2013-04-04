@@ -15,8 +15,8 @@ module Daneel
       @data = Data.new
       logger.debug "Data source #{data.class}"
 
-      @scripts = ScriptList.new(File.expand_path("../scripts", __FILE__))
-      logger.debug "Booted with scripts: #{@scripts.loaded.inspect}"
+      @scripts = ScriptList.loaded_scripts
+      logger.debug "Booted with scripts: #{@scripts.inspect}"
 
       @adapter = Adapter.named(options[:adapter] || "shell").new(self)
       logger.debug "Using the #{adapter.class} adapter"

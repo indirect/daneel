@@ -4,37 +4,19 @@ require 'daneel/options'
 require 'daneel/version'
 
 module Daneel
+  module ScriptList
+    extend self
 
-  def self.loaded_scripts
-    @loaded_scripts ||= []
-  end
-
-  class ScriptList
-
-    def initialize(location)
-      @location = location
+    def loaded_scripts
+      @loaded_scripts ||= []
     end
 
-    def safe_require(path)
-      require path
-    rescue Script::DepError => e
-      logger.warn "Couldn't load #{File.basename(name)}: #{e.message}"
-    end
-
-    def loaded
-      @loaded ||= begin
-        files = Dir[File.join(@location, "*.rb")]
-        files.each { |f| safe_require(f) }
-        Daneel.loaded_scripts.sort_by(&:priority)
-      end
-    end
-
-    include Enumerable
-
-    def each(*args)
-      loaded.each(*args) { |*a| yield *a }
+    def load_from(location)
+      script_files = Dir[File.join(location, "*.rb")]
+      script_files.each{|f| require(f) }
+      loaded_scripts.sort!{|a,b| a.priority <=> b.priority }
+      self
     end
 
   end
-
 end
