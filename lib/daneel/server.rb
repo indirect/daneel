@@ -17,8 +17,7 @@ module Daneel
 
     def run
       Thread.new { run_server }
-      sleep 0.1 # boot server before allowing possible interaction
-      Thread.new { run_self_ping }
+      Thread.new { run_self_ping } if ENV['HEROKU_URL']
     end
 
     def run_server
@@ -26,7 +25,7 @@ module Daneel
     end
 
     def run_self_ping
-      return unless ENV['HEROKU_URL']
+      sleep 1 # boot server before allowing possible interaction
       uri = URI(ENV['HEROKU_URL'])
       http = Net::HTTP::Persistent.new 'daneel'
       loop do
