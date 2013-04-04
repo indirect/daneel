@@ -15,7 +15,7 @@ module Daneel
           say "good morning, #{user}"
         end
 
-        listen(/^coffee$|coffee time|☕/i) do
+        listen(/^coffee$|coffee time|☕|\:coffee\:/i) do
           say litany_against_decaffination
         end
 
