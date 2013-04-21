@@ -58,6 +58,16 @@ module Daneel
           # PHP: training wheels without the bike
           say "http://tnx.nl/php.jpg"
         end
+
+        listen(/fuck this/i) do
+          # fuck that thing in particular
+          say "http://files.arko.net/image/070t0O2x1d1D/fuck-this.gif"
+        end
+
+        listen(/no time to explain/i) do
+          # get on the pony
+          say "http://files.arko.net/image/0B0W1M2L2g1Q/no-time-to-explain.jpg"
+        end
       end
 
     end
