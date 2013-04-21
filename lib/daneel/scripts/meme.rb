@@ -39,11 +39,6 @@ module Daneel
           say "https://img.skitch.com/20110225-k9xpadr2hk37pe5ed4crcqria1.png"
         end
 
-        listen(/^i have no idea what i'm doing$/i) do
-          # I have no idea what I'm doing
-          say "https://img.skitch.com/20110304-1tcmatkhapiq6t51wqqq9igat5.jpg"
-        end
-
         listen(/^bomb|system error$/i) do
           # sorry, a system error has occurred
           say "https://img.skitch.com/20110312-8g31a37spacdjgatr82g3g98j1.jpg"
