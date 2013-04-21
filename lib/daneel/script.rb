@@ -1,4 +1,5 @@
 require 'daneel/plugin'
+require 'daneel/script_list'
 
 module Daneel
   class Script < Plugin
@@ -87,6 +88,22 @@ module Daneel
     # Priority that this script will run at. Lower numbers run first.
     def self.priority(value = nil)
       value ? @priority = value : (@priority || 0)
+    end
+
+    class Image < Script
+      def self.images(images)
+        @image_list = images
+      end
+
+      def self.image_list
+        @image_list || []
+      end
+
+      def self.image_on(*regexes)
+        define_method(:run) do
+          listen(*regexes){ say self.class.image_list.sample }
+        end
+      end
     end
 
   end
