@@ -51,11 +51,11 @@ module Daneel
 
       # Heroku cycles every process at least once per day by sending it a TERM
       trap(:TERM) do
-        @adapter.announce "asked to stop, brb"
+        # @adapter.announce "asked to stop, brb"
         exit
       end
 
-      @adapter.announce "hey guys"
+      # @adapter.announce "hey guys"
       @adapter.run
     rescue Interrupt
       adapter.leave
