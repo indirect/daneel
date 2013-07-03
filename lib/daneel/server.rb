@@ -30,7 +30,7 @@ module Daneel
       http = Net::HTTP::Persistent.new 'daneel'
       loop do
         http.request uri
-        sleep (60 * 20) # 20m
+        sleep (60 * 2) # 2m
       end
     end
 
