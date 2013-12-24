@@ -7,5 +7,5 @@ gemspec
 
 # Development dependencies other than rake and bundler
 group :development do
-  gem 'pry-debugger'
+  gem 'pry-byebug'
 end
