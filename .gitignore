@@ -2,6 +2,7 @@
 /.bundle/
 /.env*
 /.yardoc/
+/bin/*
 /coverage/
 /doc/
 /exec/
@@ -10,3 +11,5 @@
 /rdoc/
 /tmp/
 /vendor/bundle/
+
+!/bin/daneel
