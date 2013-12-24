@@ -11,6 +11,7 @@ module Daneel
         domain = ENV['CAMPFIRE_SUBDOMAIN']
         token  = ENV['CAMPFIRE_API_TOKEN']
         @fire  = Sparks.new(domain, token, :logger => logger)
+        @me    = find_me
 
         ENV['CAMPFIRE_ROOM_IDS'].split(",").map(&:to_i).map do |id|
           # Get info about the room state
@@ -23,6 +24,8 @@ module Daneel
           end
         end
       end
+
+      attr_reader :me
 
       def run
         @threads ||= []
@@ -53,15 +56,6 @@ module Daneel
         robot.data.rooms.each{|r| @fire.room(r.id).leave }
       end
 
-      def me
-        @me ||= begin
-          data = @fire.me
-          data[:name].gsub!(/r\. /i, '') # a robot prefix isn't a name
-          me = User.new(data[:id], data[:name], data)
-          robot.data.users[me.id] = me
-        end
-      end
-
     private
 
       def find_user(id)
@@ -69,6 +63,12 @@ module Daneel
           data = @fire.user(id)
           User.new(data[:id], data[:name], data)
         end
+      end
+
+      def find_me
+        data = @fire.me
+        data[:name].gsub!(/r\. /i, '') # a robot prefix isn't a name
+        robot.data.users[data[:id]] = User.new(data[:id], data[:name], data)
       end
 
       def watch_room(room)
