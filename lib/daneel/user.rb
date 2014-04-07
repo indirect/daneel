@@ -18,6 +18,10 @@ module Daneel
       @short_name = name.match(/^(\S+)/)[0]
     end
 
+    def names
+      [name, short_name, initials]
+    end
+
     def to_s
       [short_name, short_name.downcase, initials].sample
     end
