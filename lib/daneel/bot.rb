@@ -21,6 +21,10 @@ module Daneel
       @adapter = Adapter.named(options[:adapter] || "shell").new(self)
       logger.debug "Using the #{adapter.class} adapter"
 
+      names = @adapter.me.names + ENV['NAMES'].split(',')
+      @command_name = "(?:#{names.join('|')})"
+      logger.debug "Responding to names #{names.join(',')}"
+
       @http = Net::HTTP::Persistent.new('daneel')
     end
 
@@ -61,10 +65,6 @@ module Daneel
       adapter.leave
     end
 
-    def user
-      @adapter.me
-    end
-
     def say(room, *strings)
       @adapter.say room.id, *strings
     end
@@ -87,15 +87,11 @@ module Daneel
 
   private
 
-    def command_name
-      @command_name ||= "(?:#{user.name}|#{user.short_name})"
-    end
-
     def command_from(text)
       return if text.nil? || text.empty?
-      m = text.match(/^@#{command_name}\s+(.*)/i)
-      m ||= text.match(/^#{command_name}(?:[,:]\s*|\s+)(.*)/i)
-      m ||= text.match(/^\s*(.*?)(?:,?\s*)?\b#{command_name}[.!?\s]*$/i)
+      m = text.match(/^@#{@command_name}\s+(.*)/i)
+      m ||= text.match(/^#{@command_name}(?:[,:]\s*|\s+)(.*)/i)
+      m ||= text.match(/^\s*(.*?)(?:,?\s*)?\b#{@command_name}[.!?\s]*$/i)
       m && m[1]
     end
 
